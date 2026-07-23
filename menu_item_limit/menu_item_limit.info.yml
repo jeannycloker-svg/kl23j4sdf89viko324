@@ -1,0 +1,6 @@
+name: 'Menu Item Limit'
+description: 'Allows to control the amount of items per menu.'
+core_version_requirement: ^9.1 || ^10 || ^11
+dependencies:
+  - drupal:menu_ui
+type: module

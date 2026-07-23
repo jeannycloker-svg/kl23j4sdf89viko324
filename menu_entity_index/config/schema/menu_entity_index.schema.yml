@@ -1,0 +1,19 @@
+menu_entity_index.configuration:
+  type: config_object
+  label: 'Menu Entity Index configuration'
+  mapping:
+    entity_types:
+      type: sequence
+      label: 'Tracked entity types'
+      sequence:
+        type: string
+        label: 'Entity type machine name'
+    menus:
+      type: sequence
+      label: 'Tracked menus'
+      sequence:
+        type: string
+        label: 'Menu machine name'
+    all_menus:
+      type: boolean
+      label: 'Track all menus'

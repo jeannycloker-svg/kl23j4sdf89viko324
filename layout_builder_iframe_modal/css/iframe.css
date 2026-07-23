@@ -1,0 +1,15 @@
+#drupal-lbim-modal {
+  padding: 0;
+  overflow: inherit;
+}
+
+.lbim-dialog {
+  height: 100%;
+  width: 100%;
+}
+
+.lbim-dialog-iframe {
+  border: 0;
+  width: 100%;
+  height: 100%;
+}

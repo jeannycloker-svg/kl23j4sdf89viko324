@@ -1,0 +1,14 @@
+hierarchy_manager.hm_config_form:
+  title: 'Hierarchy Manager'
+  route_name: hierarchy_manager.hm_config_form
+  description: 'Hierarchy Manager Config'
+  parent: system.admin_config_ui
+  weight: 99
+
+# HM Display Profile Entity menu items definition
+entity.hm_display_profile.collection:
+  title: 'HM Display Profile'
+  route_name: entity.hm_display_profile.collection
+  description: 'List HM Display Profiles'
+  parent: system.admin_structure
+  weight: 99

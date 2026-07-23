@@ -1,0 +1,4 @@
+type: module
+name: Gin Toolbar
+description: Gin Toolbar for Gin Theme
+core_version_requirement: ^11.2

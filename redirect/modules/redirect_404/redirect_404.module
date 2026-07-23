@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * @file
+ * Module file for redirect_404.
+ */
+
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\redirect_404\Hook\Redirect404Hooks;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\redirect\Entity\Redirect;
+
+/**
+ * Implements hook_cron().
+ *
+ * Adds clean up job to drop the irrelevant rows from the redirect_404 table.
+ */
+#[LegacyHook]
+function redirect_404_cron() {
+  \Drupal::service(Redirect404Hooks::class)->cron();
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for system_logging_settings().
+ */
+#[LegacyHook]
+function redirect_404_form_redirect_settings_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  \Drupal::service(Redirect404Hooks::class)->formRedirectSettingsFormAlter($form, $form_state, $form_id);
+}
+
+/**
+ * Form submission handler for system_logging_settings().
+ *
+ * @see redirect_404_form_redirect_settings_form_alter()
+ */
+function redirect_404_logging_settings_submit($form, FormStateInterface $form_state) {
+  // Make sure to store the 'pages to ignore' with the leading slash.
+  $ignore_pages = explode(PHP_EOL, $form_state->getValue('ignore_pages'));
+  $pages = '';
+  foreach ($ignore_pages as $page) {
+    if (!empty($page)) {
+      $pages .= '/' . ltrim($page, '/') . "\n";
+    }
+  }
+
+  \Drupal::configFactory()
+    ->getEditable('redirect_404.settings')
+    ->set('row_limit', $form_state->getValue('row_limit'))
+    ->set('pages', $pages)
+    ->set('suppress_404', $form_state->getValue('suppress_404'))
+    ->save();
+
+  // Remove the filtered out items.
+  /** @var \Drupal\redirect_404\RedirectNotFoundStorageInterface $redirect_storage */
+  $redirect_storage = \Drupal::service('redirect.not_found_storage');
+  foreach ($ignore_pages as $ignore_page) {
+    $redirect_storage->resolveLogRequest(trim($ignore_page));
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for redirect entities.
+ */
+#[LegacyHook]
+function redirect_404_redirect_presave(Redirect $redirect) {
+  \Drupal::service(Redirect404Hooks::class)->redirectPresave($redirect);
+}
+
+/**
+ * Submit Handler for resetting all the 404 logs from Database.
+ */
+function redirect_404_reset_submit() {
+  \Drupal::database()->truncate('redirect_404')->execute();
+}

@@ -1,0 +1,6 @@
+services:
+  wingsuit_lb.layout_choose_controller_alter:
+    class: Drupal\wingsuit_lb\EventSubscriber\LayoutBuilderBrowserEventSubscriber
+    arguments: ['@extension.list.module', '@entity_type.manager', '@file_url_generator']
+    tags:
+      - { name: event_subscriber }

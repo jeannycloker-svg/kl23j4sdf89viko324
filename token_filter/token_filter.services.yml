@@ -1,0 +1,4 @@
+services:
+  Drupal\token_filter\Hook\TokenFilterHooks:
+    autoconfigure: true
+    autowire: true

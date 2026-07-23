@@ -1,0 +1,7 @@
+name: Mailer Plus Test
+type: module
+description: For testing of Mailer Plus.
+package: Testing
+hidden: true
+dependencies:
+  - symfony_mailer:symfony_mailer

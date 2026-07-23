@@ -1,0 +1,86 @@
+# Feature libraries.
+
+feature.hm.jstree:
+  js:
+    js/Plugin/jstree/hm.jstree.js: {}
+  css:
+    theme:
+      css/Plugin/jstree/hm.jstree.css: {}
+  dependencies:
+    - hierarchy_manager/libraries.jquery.jstree
+    - core/drupalSettings
+    - core/drupal.message
+    - core/once
+
+feature.hm.jsoneditor:
+  js:
+    js/Plugin/jsoneditor/hm.jsoneditor.js: {}
+  dependencies:
+    - hierarchy_manager/libraries.jsoneditor
+
+# External libraries.
+
+libraries.jquery.jstree:
+  remote: https://github.com/vakata/jstree
+  version: '3.3.15'
+  license:
+    name: MIT
+    url: https://github.com/vakata/jstree/blob/master/LICENSE-MIT
+    gpl-compatible: true
+  cdn:
+    https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.15/
+  js:
+    /libraries/jquery.jstree/3.3.15/jstree.min.js: {minified: true}
+  dependencies:
+    - core/jquery
+
+libraries.jquery.jstree.default:
+  remote: https://github.com/vakata/jstree
+  version: '3.3.15'
+  license:
+    name: MIT
+    url: https://github.com/vakata/jstree/blob/master/LICENSE-MIT
+    gpl-compatible: true
+  cdn:
+    https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.15/themes/default/
+  css:
+    component:
+      /libraries/jquery.jstree/3.3.15/themes/default/style.min.css: {}
+
+libraries.jquery.jstree.default-dark:
+  remote: https://github.com/vakata/jstree
+  version: '3.3.15'
+  license:
+    name: MIT
+    url: https://github.com/vakata/jstree/blob/master/LICENSE-MIT
+    gpl-compatible: true
+  cdn:
+    https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.15/themes/default-dark/
+  css:
+    component:
+      /libraries/jquery.jstree/3.3.15/themes/default-dark/style.min.css: {}
+
+libraries.jsoneditor:
+  remote: https://github.com/josdejong/jsoneditor
+  version: '9.9.2'
+  license:
+    name: Apache License 2.0
+    url: https://github.com/josdejong/jsoneditor/blob/develop/LICENSE
+    gpl-compatible: true
+  cdn:
+    https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.9.2/
+  js:
+    /libraries/jsoneditor/9.9.2/jsoneditor.min.js: {minified: true}
+
+libraries.jsoneditor.default-theme:
+  remote: https://github.com/josdejong/jsoneditor
+  version: '9.9.2'
+  license:
+    name: Apache License 2.0
+    url: https://github.com/josdejong/jsoneditor/blob/develop/LICENSE
+    gpl-compatible: true
+  cdn:
+    https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.9.2/
+  css:
+    component:
+      /libraries/jsoneditor/9.9.2/jsoneditor.min.css: {minified: true}

@@ -1,0 +1,79 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Hierarchy Manager module.
+ */
+
+use Drupal\system\Entity\Menu;
+
+/**
+ * Enable hierarchy manager for all bundles of active setup plugins.
+ */
+function hierarchy_manager_update_8001() {
+  if ($config = \Drupal::configFactory()->getEditable('hierarchy_manager.hmconfig')) {
+    if ($allowed_setup_plugins = $config->get('allowed_setup_plugins')) {
+      if (!empty($allowed_setup_plugins['hm_setup_menu'])) {
+        $menus = Menu::loadMultiple();
+        $bundles = [];
+        /** @var \Drupal\system\Entity\Menu $menu */
+        foreach ($menus as $menu) {
+          $id = $menu->id();
+          $bundles[$id] = $id;
+        }
+        $config->set('setup_plugin_settings.hm_setup_menu.bundle', $bundles);
+        $config->save();
+      }
+      if (!empty($allowed_setup_plugins['hm_setup_taxonomy'])) {
+        $vocabularies = \Drupal::service('entity_type.bundle.info')->getBundleInfo('taxonomy_term');
+        $bundles = [];
+        foreach ($vocabularies as $key => $value) {
+          $bundles[$key] = $key;
+        }
+        $config->set('setup_plugin_settings.hm_setup_taxonomy.bundle', $bundles);
+        $config->save();
+      }
+      drupal_flush_all_caches();
+    }
+  }
+}
+
+/**
+ * Clean configuration by removing unchecked (zero) values.
+ *
+ * Removes unchecked values (0) from allowed_setup_plugins and bundle settings
+ * while preserving associative keys for backward compatibility.
+ */
+function hierarchy_manager_update_10001() {
+  $config = \Drupal::configFactory()->getEditable('hierarchy_manager.hmconfig');
+  if ($config->isNew()) {
+    return;
+  }
+
+  $changed = FALSE;
+
+  // Remove unchecked values from allowed_setup_plugins, preserving keys.
+  $allowed_setup_plugins = $config->get('allowed_setup_plugins');
+  if (is_array($allowed_setup_plugins)) {
+    $cleaned = array_filter($allowed_setup_plugins);
+    $config->set('allowed_setup_plugins', $cleaned);
+    $changed = TRUE;
+  }
+
+  // Remove unchecked values from bundle settings in each plugin.
+  $setup_plugin_settings = $config->get('setup_plugin_settings');
+  if (is_array($setup_plugin_settings)) {
+    foreach ($setup_plugin_settings as $plugin_id => $settings) {
+      if (isset($settings['bundle']) && is_array($settings['bundle'])) {
+        $cleaned_bundle = array_filter($settings['bundle']);
+        $setup_plugin_settings[$plugin_id]['bundle'] = $cleaned_bundle;
+        $changed = TRUE;
+      }
+    }
+    $config->set('setup_plugin_settings', $setup_plugin_settings);
+  }
+
+  if ($changed) {
+    $config->save();
+  }
+}

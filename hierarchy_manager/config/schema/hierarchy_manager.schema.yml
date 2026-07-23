@@ -1,0 +1,71 @@
+hierarchy_manager.hmconfig:
+  type: config_object
+  label: 'Hierarchy Manager Configuration'
+  mapping:
+    allowed_setup_plugins:
+      type: mapping
+      label: 'Allowed Setup Plugins'
+      mapping:
+        '*':
+          type: string
+          label: 'Setup Plugin ID'
+
+    setup_plugin_settings:
+      type: mapping
+      label: 'Setup Plugin Settings'
+      mapping:
+        '*':
+          type: hierarchy_manager.HmSetupPlugin.plugin.config.[%key]
+
+
+hierarchy_manager.HmSetupPlugin.plugin.config.hm_setup_taxonomy:
+  type: mapping
+  label: 'HM Setup Taxonomy Settings'
+  mapping:
+    display_profile:
+      type: string
+      label: 'Display Profile'
+    bundle:
+      type: mapping
+      label: 'Bundle'
+      mapping:
+        '*':
+          type: string
+          label: 'Bundle Name'
+
+
+hierarchy_manager.HmSetupPlugin.plugin.config.hm_setup_menu:
+  type: mapping
+  label: 'HM Setup Menu Settings'
+  mapping:
+    display_profile:
+      type: string
+      label: 'Display Profile'
+    bundle:
+      type: mapping
+      label: 'Bundle'
+      mapping:
+        '*':
+          type: string
+          label: 'Bundle Item'
+
+
+hierarchy_manager.hm_display_profile.*:
+  type: config_entity
+  label: 'Hierarchy Manager Display Profile'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: string
+      label: 'Label'
+    plugin:
+      type: string
+      label: 'Plugin'
+    config:
+      type: string
+      label: 'Display Plugin Configuration (JSON-encoded)'
+    confirm:
+      type: boolean
+      label: 'Confirm'

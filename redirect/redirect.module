@@ -1,0 +1,181 @@
+<?php
+
+/**
+ * @file
+ * The redirect module.
+ */
+
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\path_alias\PathAliasInterface;
+use Drupal\redirect\Hook\RedirectHelpHooks;
+use Drupal\redirect\Hook\RedirectEntityHooks;
+use Drupal\redirect\Hook\RedirectFormHooks;
+use Drupal\redirect\RedirectRepository;
+
+/**
+ * Implements hook_hook_info().
+ */
+function redirect_hook_info() {
+  $hooks = [
+    'redirect_load',
+    'redirect_access',
+    'redirect_validate',
+    'redirect_presave',
+    'redirect_insert',
+    'redirect_update',
+    'redirect_delete',
+    'redirect_alter',
+    'redirect_response',
+  ];
+
+  return array_fill_keys($hooks, ['group' => 'redirect']);
+}
+
+/**
+ * Implements hook_help().
+ */
+#[LegacyHook]
+function redirect_help($route_name, RouteMatchInterface $route_match) {
+  return \Drupal::service(RedirectHelpHooks::class)->help($route_name, $route_match);
+}
+
+/**
+ * Implements hook_entity_predelete().
+ *
+ * Will delete redirects based on the entity URL.
+ */
+#[LegacyHook]
+function redirect_entity_predelete(EntityInterface $entity) {
+  \Drupal::service(RedirectEntityHooks::class)->entityPredelete($entity);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for path_alias.
+ */
+#[LegacyHook]
+function redirect_path_alias_update(PathAliasInterface $path_alias) {
+  \Drupal::service(RedirectEntityHooks::class)->pathAliasUpdate($path_alias);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert() for path_alias.
+ */
+#[LegacyHook]
+function redirect_path_alias_insert(PathAliasInterface $path_alias) {
+  \Drupal::service(RedirectEntityHooks::class)->pathAliasInsert($path_alias);
+}
+
+/**
+ * Gets the redirect repository service.
+ *
+ * @return \Drupal\redirect\RedirectRepository
+ *   The repository service.
+ *
+ * @deprecated in redirect:8.x-1.14 and is removed from redirect:2.0.0. Use the
+ *   RedirectRepository service directly.
+ *
+ * @see https://www.drupal.org/project/redirect/issues/3602388
+ */
+function redirect_repository() {
+  return \Drupal::service('redirect.repository');
+}
+
+/**
+ * Delete any redirects associated with a path or any of its sub-paths.
+ *
+ * Given a source like 'node/1' this function will delete any redirects that
+ * have that specific source or any sources that match 'node/1/%'.
+ *
+ * @param string $path
+ *   An string with an internal Drupal path.
+ * @param string $langcode
+ *   (optional) If specified, limits deletion to redirects for the given
+ *   language. Defaults to all languages.
+ * @param bool $match_subpaths_and_redirect
+ *   (optional) Whether redirects with a destination to the given path and
+ *   sub-paths should also be deleted.
+ *
+ * @ingroup redirect_api
+ *
+ * @deprecated in redirect:8.x-1.14 and is removed from redirect:2.0.0. Use
+ *   \Drupal\redirect\RedirectRepository::deleteByPath() instead.
+ *
+ * @see https://www.drupal.org/project/redirect/issues/3602388
+ */
+function redirect_delete_by_path($path, $langcode = NULL, $match_subpaths_and_redirect = TRUE) {
+  \Drupal::service(RedirectRepository::class)->deleteByPath($path, $langcode, $match_subpaths_and_redirect);
+}
+
+/**
+ * Sort an array recursively.
+ *
+ * @param array $array
+ *   The array to sort, by reference.
+ * @param callable $callback
+ *   The sorting callback to use (e.g. 'sort', 'ksort', 'asort').
+ *
+ * @return bool
+ *   TRUE on success or FALSE on failure.
+ *
+ * @deprecated in redirect:8.x-1.14 and is removed from redirect:2.0.0. Use
+ *   \Drupal\redirect\Entity\Redirect::sortRecursive() instead.
+ *
+ * @see https://www.drupal.org/project/redirect/issues/3602388
+ */
+function redirect_sort_recursive(&$array, $callback = 'sort') {
+  $result = $callback($array);
+  foreach ($array as $key => $value) {
+    if (is_array($value)) {
+      $result &= redirect_sort_recursive($array[$key], $callback);
+    }
+  }
+  return $result;
+}
+
+/**
+ * @deprecated in redirect:8.x-1.14 and is removed from redirect:2.0.0. use
+ *   \Drupal\redirect\Form\RedirectForm::statusCodeOptions() instead.
+ *
+ * @see https://www.drupal.org/project/redirect/issues/3602388
+ */
+function redirect_status_code_options($code = NULL) {
+  $codes = [
+    300 => t('300 Multiple Choices'),
+    301 => t('301 Moved Permanently'),
+    302 => t('302 Found'),
+    303 => t('303 See Other'),
+    304 => t('304 Not Modified'),
+    305 => t('305 Use Proxy'),
+    307 => t('307 Temporary Redirect'),
+  ];
+  return $code !== NULL ? $codes[$code] : $codes;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * (on behalf of locale.module)
+ */
+#[LegacyHook]
+function locale_form_redirect_edit_form_alter(array &$form, FormStateInterface $form_state) {
+  \Drupal::service(RedirectFormHooks::class)->localeFormRedirectEditFormAlter($form, $form_state);
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+#[LegacyHook]
+function redirect_entity_extra_field_info() {
+  return \Drupal::service(RedirectEntityHooks::class)->entityExtraFieldInfo();
+}
+
+/**
+ * Implements hook_form_node_form_alter().
+ */
+#[LegacyHook]
+function redirect_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  \Drupal::service(RedirectFormHooks::class)->formNodeFormAlter($form, $form_state, $form_id);
+}

@@ -1,0 +1,18 @@
+services:
+  _defaults:
+    autoconfigure: true
+
+  remove_http_headers.event_subscriber:
+    class: Drupal\remove_http_headers\EventSubscriber\RemoveHttpHeadersConfigSubscriber
+    arguments: ['@cache.default']
+
+  remove_http_headers.config_manager:
+    class: Drupal\remove_http_headers\Config\ConfigManager
+    arguments: ['@config.factory', '@cache.default']
+
+  # Set a high priority to ensure the middleware runs last.
+  http_middleware.remove_http_headers:
+    class: Drupal\remove_http_headers\StackMiddleware\RemoveHttpHeadersMiddleware
+    arguments: ['@remove_http_headers.config_manager']
+    tags:
+      - { name: http_middleware, priority: 1000, responder: true }

@@ -1,0 +1,58 @@
+services:
+  Drupal\config_split\ConfigSplitCliService:
+    class: Drupal\config_split\ConfigSplitCliService
+    arguments:
+      - "@config_split.manager"
+      - "@config.storage"
+      - "@config.storage.sync"
+      - "@config_split.status_override"
+      - "@string_translation"
+
+  Drupal\config_split\ConfigSplitManager:
+    class: Drupal\config_split\ConfigSplitManager
+    arguments:
+      - "@config.factory"
+      - "@config.manager"
+      - "@config.storage"
+      - "@config.storage.sync"
+      - "@config.storage.export"
+      - "@database"
+      - "@config_split.patch_merge"
+  config_split.manager: '@Drupal\config_split\ConfigSplitManager'
+
+  Drupal\config_split\EventSubscriber\SplitImportExportSubscriber:
+    class: Drupal\config_split\EventSubscriber\SplitImportExportSubscriber
+    arguments:
+      - "@config_split.manager"
+      - "@config.factory"
+    tags:
+      - { name: event_subscriber }
+  config_split.event_subscriber: '@Drupal\config_split\EventSubscriber\SplitImportExportSubscriber'
+
+  Drupal\config_split\Config\ConfigSorter:
+    class: Drupal\config_split\Config\ConfigSorter
+    arguments:
+      - "@config.typed"
+      - "@config.storage"
+  config_split.sorter: '@Drupal\config_split\Config\ConfigSorter'
+
+  Drupal\config_split\Config\ConfigPatchMerge:
+    class: Drupal\config_split\Config\ConfigPatchMerge
+    arguments:
+      - "@config_split.sorter"
+      - "@config.typed"
+  config_split.patch_merge: '@Drupal\config_split\Config\ConfigPatchMerge'
+
+  Drupal\config_split\Config\StatusOverride:
+    class: Drupal\config_split\Config\StatusOverride
+    arguments:
+      - "@state"
+      - "@cache_tags.invalidator"
+  config_split.status_override: '@Drupal\config_split\Config\StatusOverride'
+
+  config_split.status_config_factory_override:
+    class: Drupal\config_split\Config\StatusConfigFactoryOverride
+    arguments:
+      - "@state"
+    tags:
+      - { name: config.factory.override, priority: 5 }

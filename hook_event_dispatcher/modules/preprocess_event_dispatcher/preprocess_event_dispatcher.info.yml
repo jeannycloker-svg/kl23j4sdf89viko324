@@ -1,0 +1,7 @@
+name: Preprocess Event Dispatcher
+type: module
+description: Dispatches events for multiple preprocess hooks
+core_version_requirement: ^9.3
+package: Hook events
+dependencies:
+  - hook_event_dispatcher:hook_event_dispatcher

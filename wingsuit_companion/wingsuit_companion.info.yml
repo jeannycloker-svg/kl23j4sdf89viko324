@@ -1,0 +1,5 @@
+name: Wingsuit companion module
+type: module
+description: 'Add ws-assets stream wrapper.'
+core_version_requirement: ^8 || ^9 ||  ^10 || ^11
+package: Wingsuit

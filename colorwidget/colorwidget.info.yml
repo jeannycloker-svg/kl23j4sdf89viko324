@@ -1,0 +1,7 @@
+name: ColorWidget
+type: module
+description: 'Defines a color widget for "List (text)" fields.'
+package: Field types
+core_version_requirement: ^9.5 || ^10
+dependencies:
+  - drupal:options

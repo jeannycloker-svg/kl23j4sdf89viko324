@@ -1,0 +1,5 @@
+name: 'Easy Breadcrumb Testing'
+description: 'Provides routes and controllers for automated testing.'
+package: Testing
+core_version_requirement: ^8 || ^9 || ^10.1 || ^11
+type: module

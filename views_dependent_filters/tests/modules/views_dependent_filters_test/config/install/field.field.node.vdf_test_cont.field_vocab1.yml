@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_vocab1
+    - node.type.vdf_test_cont
+    - taxonomy.vocabulary.vocab1
+id: node.vdf_test_cont.field_vocab1
+field_name: field_vocab1
+entity_type: node
+bundle: vdf_test_cont
+label: Vocab1
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      vocab1: vocab1
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

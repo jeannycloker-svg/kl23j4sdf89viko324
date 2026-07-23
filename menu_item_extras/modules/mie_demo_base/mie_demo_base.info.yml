@@ -1,0 +1,12 @@
+name: Menu Item Extras Demo Base
+description: "Provide a base demo example of Mega Menu"
+type: module
+package: Menu
+hidden: false
+core_version_requirement: ^9.4 || ^10 || ^11
+dependencies:
+  - drupal:ckeditor5
+  - drupal:image
+  - drupal:path
+  - drupal:taxonomy
+  - menu_item_extras:menu_item_extras

@@ -1,0 +1,11 @@
+name: Moderated Content Bulk Publish
+description: 'Provides general administration features that Drupal 10 core does not provide.'
+package: Administration
+type: module
+core_version_requirement: ^10.3 || ^11 || ^12
+configure: moderated_content_bulk_publish.settings.form
+dependencies:
+  - drupal:content_moderation
+  - drupal:workflows
+  - pathauto:pathauto
+  - views_bulk_operations:views_bulk_operations

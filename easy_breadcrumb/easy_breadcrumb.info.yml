@@ -1,0 +1,6 @@
+name: 'Easy Breadcrumb'
+type: module
+description: 'Provides configurable path based breadcrumbs.'
+package: 'Navigation'
+core_version_requirement: ^9.2 || ^10 || ^11
+configure: easy_breadcrumb.general_settings_form

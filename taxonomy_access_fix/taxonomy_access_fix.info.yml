@@ -1,0 +1,8 @@
+name: Taxonomy Access Fix
+type: module
+description: "Extends access handling of Drupal Core's Taxonomy module."
+core_version_requirement: ^10 || ^11
+package: Taxonomy
+
+dependencies:
+  - drupal:taxonomy

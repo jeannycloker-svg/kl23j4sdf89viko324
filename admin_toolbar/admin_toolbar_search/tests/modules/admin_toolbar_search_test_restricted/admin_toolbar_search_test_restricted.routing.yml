@@ -1,0 +1,9 @@
+# Routes for the Admin Toolbar Search Test Restricted module.
+
+admin_toolbar_search_test_restricted.settings:
+  path: '/admin/config/development/admin-toolbar-search-test-restricted'
+  defaults:
+    _title: 'Admin Toolbar Search Test Restricted settings'
+    _controller: '\Drupal\admin_toolbar_search_test_restricted\Controller\AdminToolbarSearchTestRestrictedController::content'
+  requirements:
+    _permission: 'access admin toolbar search test restricted'

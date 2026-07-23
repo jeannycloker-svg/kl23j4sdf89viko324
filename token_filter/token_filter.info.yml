@@ -1,0 +1,7 @@
+type: module
+name: 'Token Filter'
+description: 'Allows token values to be used as filters.'
+core_version_requirement: ^10.6 || ^11.3 || ^12
+dependencies:
+  - drupal:filter
+  - token:token

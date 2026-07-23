@@ -1,0 +1,99 @@
+<?php
+
+/**
+ * @file
+ * Contains install hooks for the 'Menu tree' module.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_install().
+ */
+function menu_tree_install() : void {
+  // Assign a weight 1 higher than menu_ui to ensure form elements are present
+  // when we alter the forms.
+  module_set_weight('menu_tree', 1);
+}
+
+/**
+ * Delete obsolete config value 'show_weight'.
+ */
+function menu_tree_update_103201(&$sandbox) : void {
+  $config_factory = \Drupal::configFactory();
+  $config_factory->getEditable('menu_tree.settings')->clear('show_weight')->save();
+}
+
+/**
+ * Move 'menu_tree' config into node type config.
+ *
+ * Move the module configuration to the node type 'third party settings' and
+ * delete the configuration.
+ */
+function menu_tree_update_103202(&$sandbox) : void {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('menu_tree.settings');
+  $ids = $config->get('bundles');
+  $node_types = \Drupal::entityTypeManager()->getStorage('node_type')->loadMultiple($ids);
+  /** @var Drupal\node\NodeTypeInterface $node_type */
+  foreach ($node_types as $node_type) {
+    $node_type->setThirdPartySetting('menu_tree', 'use_tree_widget', TRUE);
+    $node_type->save();
+  }
+  $config->delete();
+}
+
+/**
+ * Delete obsolete permission 'administer menu_tree settings'.
+ */
+function menu_tree_update_103203(&$sandbox) : void {
+  $config_factory = \Drupal::configFactory();
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $roles = $entity_type_manager->getStorage('user_role')->loadMultiple();
+  foreach ($roles as $role) {
+    $config = $config_factory->getEditable('user.role.' . $role->id());
+    $permissions = $config->get('permissions');
+    $update = FALSE;
+    foreach ($permissions as $key => $permission) {
+      if ($permission == 'administer menu_tree settings') {
+        unset($permissions[$key]);
+        $update = TRUE;
+      }
+    }
+    if ($update) {
+      $config->set('permissions', $permissions)->save();
+    }
+  }
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Sets the third party setting 'weight' on all menus.
+ */
+function menu_tree_update_103204() {
+  $storage = \Drupal::entityTypeManager()->getStorage('menu');
+  $entities = $storage->loadMultiple();
+
+  /** @var \Drupal\system\Entity\Menu $entity */
+  foreach ($entities as $entity) {
+    $entity->setThirdPartySetting('menu_tree', 'weight', 0);
+    $entity->save();
+  }
+}
+
+/**
+ * Remove 'menu_tree' third party settings from node types.
+ */
+function menu_tree_uninstall($is_syncing) : void {
+  /** @var Drupal\Core\Entity\EntityTypeBundleInfoInterface $bundle_info */
+  $bundle_info = \Drupal::service('entity_type.bundle.info');
+  $bundles = $bundle_info->getBundleInfo('node');
+  $ids = array_keys($bundles);
+  $node_types = \Drupal::entityTypeManager()->getStorage('node_type')->loadMultiple($ids);
+  /** @var Drupal\node\NodeTypeInterface $node_type */
+  foreach ($node_types as $node_type) {
+    $node_type->unsetThirdPartySetting('menu_tree', 'use_tree_widget');
+    $node_type->save();
+  }
+}

@@ -1,0 +1,5 @@
+name: Source plugin using yield
+type: module
+package: Testing
+dependencies:
+  - drupal:migrate

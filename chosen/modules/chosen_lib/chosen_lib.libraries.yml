@@ -1,0 +1,8 @@
+chosen:
+  version: 3.1.3
+  js: {}
+
+chosen.css:
+  version: 3.1.3
+  css:
+    component: {}

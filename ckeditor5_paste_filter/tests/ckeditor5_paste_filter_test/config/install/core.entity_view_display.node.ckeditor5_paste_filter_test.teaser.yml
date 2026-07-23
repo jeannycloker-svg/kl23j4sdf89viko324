@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ckeditor5_paste_filter_test.field_body
+    - node.type.ckeditor5_paste_filter_test
+  module:
+    - text
+    - user
+id: node.ckeditor5_paste_filter_test.teaser
+targetEntityType: node
+bundle: ckeditor5_paste_filter_test
+mode: teaser
+content:
+  field_body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

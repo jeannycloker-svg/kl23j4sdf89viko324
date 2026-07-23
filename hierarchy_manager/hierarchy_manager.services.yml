@@ -1,0 +1,19 @@
+services:
+  # Plugins
+  plugin.manager.hm.hmsetup:
+    class: Drupal\hierarchy_manager\Plugin\HmSetupPluginManager
+    parent: default_plugin_manager
+  plugin.manager.hm.display_plugin:
+    class: Drupal\hierarchy_manager\Plugin\HmDisplayPluginManager
+    parent: default_plugin_manager
+  # Event subscriber
+  hm.route_subscriber:
+    class: Drupal\hierarchy_manager\Routing\HmRouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  # Custom services
+  hm.plugin_type_manager:
+    class: Drupal\hierarchy_manager\PluginTypeManager
+    arguments: ['@entity_type.manager', '@plugin.manager.hm.display_plugin', '@plugin.manager.hm.hmsetup', '@module_handler']
+    tags:
+      - { name: hm_plugin_type_manager, priority: 1000 }

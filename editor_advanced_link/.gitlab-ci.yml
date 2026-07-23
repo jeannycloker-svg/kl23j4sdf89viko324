@@ -1,0 +1,14 @@
+include:
+  - project: $_GITLAB_TEMPLATES_REPO
+    ref: $_GITLAB_TEMPLATES_REF
+    file:
+      - '/includes/include.drupalci.main.yml'
+      - '/includes/include.drupalci.variables.yml'
+      - '/includes/include.drupalci.workflows.yml'
+variables:
+  CORE_STABLE: '11.1'
+  _CSPELL_WORDS: 'drupalling, editoradvancedlinkediting, editoradvancedlinkui, focusables, foobarbaz, grumphp, linkit, linktargetrel, switchbutton'
+  _CSPELL_IGNORE_PATHS: 'grumphp.yml'
+composer:
+  after_script:
+    - npm ci

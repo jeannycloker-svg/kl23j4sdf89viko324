@@ -1,0 +1,7 @@
+name: 'Entity Host Base Field ERR'
+type: module
+description: 'Entity host with base field definition using entity_reference_revisions.'
+package: Testing
+
+dependencies:
+  - entity_composite_relationship_test:entity_composite_relationship_test

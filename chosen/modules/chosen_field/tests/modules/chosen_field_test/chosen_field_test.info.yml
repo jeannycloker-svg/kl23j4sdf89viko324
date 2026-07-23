@@ -1,0 +1,7 @@
+name: 'Chosen Field Test'
+type: module
+description: 'Test support module for chosen_field.'
+core_version_requirement: '^10.3 || ^11 || ^12'
+package: Testing
+dependencies:
+  - field

@@ -1,0 +1,17 @@
+{
+    "name": "drupal/editor_advanced_link",
+    "description": "Add title, target etc. attributes to Text Editor''s link dialog if the text format allows them.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "require-dev": {
+        "phpro/grumphp": "^2.0"
+    },
+    "conflict": {
+        "drupal/core": "^10 >=10.5 || ^11 >=11.2"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpro/grumphp": true
+        }
+    }
+}

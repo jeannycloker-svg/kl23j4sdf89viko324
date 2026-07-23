@@ -1,0 +1,8 @@
+name: 'Purge UI'
+type: module
+description: 'Administrative interface for Purge.'
+package: Purge
+configure: purge_ui.dashboard
+dependencies:
+  - purge:purge
+core_version_requirement: '^10.2 || ^11'

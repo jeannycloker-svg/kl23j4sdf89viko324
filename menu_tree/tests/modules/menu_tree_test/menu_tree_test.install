@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Contains install hooks for the 'menu_tree_test' module.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_install().
+ */
+function menu_tree_test_install() : void {
+  // Assign a weight 1 higher than menu_tree to ensure form elements are present
+  // when we alter the forms.
+  module_set_weight('menu_tree_test', 2);
+}

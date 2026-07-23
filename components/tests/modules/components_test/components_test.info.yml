@@ -1,0 +1,9 @@
+name: 'Components test'
+type: module
+description: 'Support module for Components testing.'
+package: Testing
+components:
+  namespaces:
+    components_test: 'default-namespace'
+    components: 'components'
+    system: 'system'

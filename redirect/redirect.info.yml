@@ -1,0 +1,10 @@
+name: Redirect
+type: module
+description: Allows users to redirect from old URLs to new URLs.
+core_version_requirement: ^10.3 || ^11 || ^12
+configure: redirect.settings
+
+dependencies:
+  - drupal:path_alias
+  - drupal:link
+  - drupal:views

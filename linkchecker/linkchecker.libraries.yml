@@ -1,0 +1,6 @@
+linkchecker.content_types:
+  js:
+    js/linkchecker.content_types.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal

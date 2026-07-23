@@ -1,0 +1,3 @@
+services:
+  layoutbuilder_search_api.manager:
+    class: Drupal\layoutbuilder_search_api\LayoutbuilderSearchApiManager

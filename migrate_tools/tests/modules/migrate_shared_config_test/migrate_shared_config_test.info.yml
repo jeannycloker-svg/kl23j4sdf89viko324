@@ -1,0 +1,7 @@
+name: 'Test module for migrate shared configuration'
+type: module
+description: 'Test module for migrate shared configuration'
+package: Testing
+dependencies:
+  - drupal:migrate
+  - migrate_tools:migrate_tools

@@ -1,0 +1,6 @@
+parameters:
+  menu_tree_test.hooks_converted: true
+
+services:
+  Drupal\menu_tree_test\Hook\MenuTreeTestHooks:
+    autowire: true

@@ -1,0 +1,7 @@
+name: 'Remove block queuer and processor.'
+type: module
+description: 'Replace ProcessorsService and QueuersService to load Drupal without plugins.'
+package: Testing
+dependencies:
+  - purge:purge
+  - purge:purge_ui

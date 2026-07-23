@@ -1,0 +1,156 @@
+.menu-tree {}
+
+.menu-tree__tree {
+  --spacing: 1.5rem;
+  --radius: 9px;
+  margin: 0 0 1rem calc((var(--radius) + 2px) * -1);
+}
+
+.menu-tree__tree:last-of-type {
+  margin-bottom: 0;
+}
+
+.menu-tree__tree li {
+  display: block;
+  position: relative;
+  padding-left: calc(2.2 * var(--spacing) - var(--radius) - 4px);
+}
+
+.menu-tree__tree li[draggable="true"]:after {
+  --r:2px; /* border radius */
+  aspect-ratio: cos(30deg);
+  --_g:calc(tan(60deg)*var(--r)) left var(--r),#000 98%,#0000 101%;
+  -webkit-mask:
+    conic-gradient(from 60deg at calc(3*var(--r)/2 - 100%),#000 60deg,#0000 0)
+    0 0/calc(100% - 3*var(--r)/2) 100% no-repeat,
+    radial-gradient(var(--r) at calc(100% - 2*var(--r)) 50%,#000 98%,#0000 101%),
+    radial-gradient(var(--r) at top    var(--_g)),
+    radial-gradient(var(--r) at bottom var(--_g));
+  clip-path: polygon(100% 50%,0 100%,0 0);
+  background: #999;
+}
+
+.menu-tree__tree li[draggable="true"],
+.menu-tree__tree li[draggable="true"] button {
+  cursor: grab;
+}
+
+.menu-tree__tree ul {
+  margin-left: calc(var(--radius) - var(--spacing) - 4px);
+  padding-left: 0;
+}
+
+.menu-tree__tree ul li {
+  border-left: 2px solid #ddd;
+}
+
+.menu-tree__tree ul li:last-child {
+  border-color: transparent;
+}
+
+.menu-tree__tree ul li::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: calc(var(--spacing) / -1.9);
+  left: -2px;
+  width: calc(var(--spacing) + 2px);
+  height: calc(var(--spacing) + 1px);
+  border: solid #ddd;
+  border-width: 0 0 2px 2px;
+}
+
+.menu-tree__tree button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  text-align: left;
+}
+
+.menu-tree__tree button:disabled {
+  font-weight: bold;
+}
+
+.menu-tree__tree summary {
+  display: block;
+  cursor: pointer;
+  font-weight: normal;
+  padding: 0;
+}
+
+.menu-tree__tree summary::marker,
+.menu-tree__tree summary::-webkit-details-marker {
+  display: none;
+}
+
+.menu-tree__tree summary:focus {
+  outline: none;
+}
+
+.menu-tree__tree summary:focus-visible {
+  outline: 1px dotted #000;
+}
+
+.menu-tree__tree li::after,
+.menu-tree__tree summary::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: calc(var(--spacing) / 2 - var(--radius));
+  left: calc(var(--spacing) - var(--radius) - 1px);
+  width: calc(2 * var(--radius));
+  height: calc(2 * var(--radius));
+  background: #ddd;
+  border-radius: 2px;
+}
+
+.menu-tree__tree li.selected::after,
+.menu-tree__tree summary.selected::before,
+.menu-tree__tree details[open] > summary.selected::before {
+  background-color: #003ecc;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 32 32"><path d="m5 16.577 2.194-2.195 5.486 5.484L24.804 7.743 27 9.937l-14.32 14.32z" fill="%23fff"/></svg>');
+}
+
+.menu-tree__tree summary.descendant-selected::before {
+  background-color: #d1dcf5;
+}
+
+.menu-tree__tree li::before {
+  pointer-events: none;
+}
+
+.menu-tree__tree summary::before {
+  z-index: 1;
+  background: #ddd url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22"><path d="M12 17h-2v-5H5v-2h5V5h2v5h5v2h-5Z"/></svg>') 0 0;
+}
+
+.menu-tree__tree details {
+  line-height: 1.5;
+}
+
+.menu-tree__tree details[open] > summary::before {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22"><path d="M17 12H5v-2h12Z"/></svg>');
+}
+
+.menu-tree__tree > li > details > summary {
+  display: flex;
+  gap: 6px;
+}
+
+.menu-tree__tree > li > details > summary > button.select-item {
+  flex: 1;
+}
+
+.menu-tree__tree .toggle-collapse.collapse .action-link--icon-expand::before {
+  content: "";
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="%23545560"><path d="M17 12H5v-2h12Z"/></svg>');
+}
+
+.menu-tree__tree .toggle-collapse.expand .action-link--icon-expand::before {
+  content: "";
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="%23545560"><path d="M12 17h-2v-5H5v-2h5V5h2v5h5v2h-5Z"/></svg>');
+}

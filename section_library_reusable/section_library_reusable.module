@@ -1,0 +1,105 @@
+<?php
+
+/**
+ * @file
+ * Section Library Reusable module file.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Ajax\ReplaceCommand;
+
+/**
+ * Implements hook_form_alter().
+ */
+function section_library_reusable_form_alter(
+  &$form,
+  FormStateInterface $form_state,
+  $form_id
+) {
+  if ($form_id === 'section_library_add_section_to_library') {
+    $form['label']['#weight'] = 10;
+    $form['image']['#weight'] = 30;
+    $form['actions']['#weight'] = 40;
+    $form['reusable'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Reusable'),
+      '#weight' => 20,
+      '#description' => t(
+        'If checked, this section will be stored in a reusable block. So you can change the content of this block sitewide.'
+      ),
+    ];
+    array_unshift($form['#submit'], 'section_library_reusable_submit');
+    $form['actions']['submit']['#ajax']['callback'] = 'section_library_reusable_ajax_submit';
+  }
+}
+
+/**
+ * Implements hook_form_alter_ajax_submit().
+ */
+function section_library_reusable_ajax_submit(
+  $form,
+  FormStateInterface $form_state
+) {
+  $response = $form_state->getFormObject()->ajaxSubmit($form, $form_state);
+  $reusable = $form_state->getValue('reusable');
+  if ($reusable === 1) {
+    $build_info = $form_state->getBuildInfo();
+    $section_storage = $build_info['args'][0];
+    $layout = [
+      '#type' => 'layout_builder',
+      '#section_storage' => $section_storage,
+    ];
+    $response->addCommand(new ReplaceCommand('#layout-builder', $layout));
+  }
+  return $response;
+}
+
+/**
+ * Implements hook_form_alter_submit().
+ */
+function section_library_reusable_submit(
+  $form,
+  FormStateInterface $form_state
+) {
+  $reusable = $form_state->getValue('reusable');
+  if ($reusable === 1) {
+
+    $build_info = $form_state->getBuildInfo();
+    /** @var \Drupal\layout_builder\Plugin\SectionStorage\OverridesSectionStorage $section_storage */
+    $section_storage = $build_info['args'][0];
+    $delta = $build_info['args'][1];
+    $label = $form_state->getValue('label');
+    /** @var \Drupal\section_library_reusable\SectionLibraryReusableManagerInterface $layout_section_reusable */
+    $layout_section_reusable = \Drupal::service(
+      'section_library_reusable.manager'
+    );
+    $layout_section_reusable->makeSectionReusable(
+      $section_storage,
+      $delta,
+      $label
+    );
+  }
+}
+
+/**
+ * Implements hook_plugin_filter_TYPE_alter().
+ */
+function section_library_reusable_plugin_filter_layout_alter(
+  array &$definitions,
+  array $extra,
+  $consumer
+) {
+  // Hide the blank section_library_reusable_wrapper plugin from listings.
+  unset($definitions['section_library_reusable_wrapper']);
+}
+
+/**
+ * Implements hook_plugin_filter_TYPE_alter().
+ */
+function section_library_reusable_plugin_filter_block_alter(
+  array &$definitions,
+  array $extra
+) {
+  // Hide the blank section_library_reusable plugin from add block listing.
+  unset($definitions['inline_block:section_library_reusable']);
+}

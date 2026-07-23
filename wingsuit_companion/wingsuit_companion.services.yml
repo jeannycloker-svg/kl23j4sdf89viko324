@@ -1,0 +1,7 @@
+services:
+  stream_wrapper.wingsuit:
+    class: Drupal\wingsuit_companion\StreamWrapper\WingsuitStreamWrapper
+    arguments: ['@config.factory', '@request_stack']
+    tags:
+      - { name: stream_wrapper, scheme: ws-assets }
+

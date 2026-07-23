@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.section_library_reusable
+    - field.field.block_content.section_library_reusable.field_library
+  module:
+    - layout_builder
+third_party_settings:
+  layout_builder:
+    allow_custom: true
+    enabled: true
+id: block_content.section_library_reusable.default
+targetEntityType: block_content
+bundle: section_library_reusable
+mode: default
+content: {  }
+hidden:
+  field_library: true

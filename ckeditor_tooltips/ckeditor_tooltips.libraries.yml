@@ -1,0 +1,50 @@
+# Plugin files
+admin.ckeditor-tooltips:
+  css:
+    theme:
+      css/ckeditor_tooltips.admin.css: { minified: false}
+ckeditor-tooltip:
+  js:
+    js/build/CkeditorTooltip.js: { preprocess: false, minified: true }
+  dependencies:
+    - core/ckeditor5
+
+# Front end JS and minimal styling
+front-end-js:
+  js:
+    js/ckeditor_tooltips.js: { minified: false}
+  css:
+    theme:
+      css/front-end-minimal.css: { minified: false }
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/drupalSettings
+    - core/once
+
+# Default styling
+front-end-styling:
+  css:
+    theme:
+      css/front-end.css: { minified: false }
+
+# Tippy overrides
+tippy-overrides:
+  css:
+    theme:
+      css/tippy-overrides.css: { minified: false }
+
+# Tippy Animations
+## Scale
+tippy-animation-scale:
+  css:
+    theme:
+      css/tippy-scale.css: { minified: false }
+
+# Tippy library
+# TODO: Add it in the correct way to the drupal library folder or vendor.
+tippyjs:
+  version: 6.3.7
+  js:
+    js/vendor/popper/popper.min.js: { minified: true }
+    js/vendor/tippy/tippy-bundle.umd.min.js: { minified: true }

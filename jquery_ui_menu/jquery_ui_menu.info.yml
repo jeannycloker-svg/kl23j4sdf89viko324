@@ -1,0 +1,7 @@
+name: jQuery UI Menu
+type: module
+description: 'Provides jQuery UI Menu library.'
+package: jQuery UI
+core_version_requirement: ^8 || ^9
+dependencies:
+  - jquery_ui:jquery_ui

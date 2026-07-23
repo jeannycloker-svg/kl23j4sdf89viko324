@@ -1,0 +1,6 @@
+name: Email TFA
+description: Provide An Email TFA for users after login.
+core_version_requirement: ^9 || ^10
+package: Security
+type: module
+configure: email_tfa.settings

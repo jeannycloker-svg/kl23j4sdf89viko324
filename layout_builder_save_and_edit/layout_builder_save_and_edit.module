@@ -1,0 +1,104 @@
+<?php
+
+/**
+ * @file
+ * Layout Builder Save And Edit module file.
+ */
+
+use Drupal\Core\Entity\ContentEntityFormInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\layout_builder\Form\DefaultsEntityForm;
+use Drupal\layout_builder\Form\OverridesEntityForm;
+
+/**
+ * Implements hook_form_alter().
+ */
+function layout_builder_save_and_edit_form_alter(&$form, FormStateInterface $form_state) {
+  $form_object = $form_state->getFormObject();
+  $render_button = FALSE;
+  $redirect_url = NULL;
+
+  // Page is 1) a default layout page or 2) an entity's 'layout' override page.
+  if ($form_object instanceof DefaultsEntityForm
+    || $form_object instanceof OverridesEntityForm
+    ) {
+    $render_button = TRUE;
+
+    $current_path = \Drupal::service('path.current')->getPath();
+    $redirect_url = Url::fromUserInput($current_path);
+  }
+  // Page is entity's create, edit, or delete page.
+  elseif ($form_object instanceof ContentEntityFormInterface) {
+    $entity = $form_object->getEntity();
+    $operation = $form_object->getOperation();
+    // Ignore entity form pages except 'edit' and 'default' (which is equivalent
+    // to 'create').
+    if (!in_array($operation, ['edit', 'default'], TRUE)) {
+      return;
+    }
+    // Ignore entities that do not have an editable layout override.
+    if (!$entity->layout_builder__layout) {
+      return;
+    }
+    $account = \Drupal::currentUser();
+    $entity_type_id = $entity->getEntityTypeId();
+    $bundle = $entity->bundle();
+    // Check if current user has permission to edit the layout override.
+    $permission = "configure editable $bundle $entity_type_id layout overrides";
+    if ($account->hasPermission($permission)) {
+      $render_button = TRUE;
+    }
+  }
+
+  if ($render_button) {
+    $form['actions']['layout_builder_save_and_edit_layout'] = $form['actions']['submit'];
+    $form['actions']['layout_builder_save_and_edit_layout']['#value'] = t('Save and edit layout');
+    unset($form['actions']['layout_builder_save_and_edit_layout']['#button_type']);
+    if ($redirect_url) {
+      $form['actions']['layout_builder_save_and_edit_layout']['#redirect_url'] = $redirect_url;
+    }
+    // Set custom validator as first in validation process.
+    array_unshift($form['#validate'], 'layout_builder_save_and_edit_layout_validate_handler');
+  }
+}
+
+/**
+ * Validation callback for layout builder save and edit.
+ *
+ * Check if trigger was custom "Save and edit layout" button. If so, set custom
+ * submit callback as the last callback in the submit handler stack.
+ */
+function layout_builder_save_and_edit_layout_validate_handler(&$form, FormStateInterface $form_state) {
+  $trigger = $form_state->getTriggeringElement();
+  if (isset($trigger['#attributes']['data-drupal-selector'])
+    && $trigger['#attributes']['data-drupal-selector'] == 'edit-layout-builder-save-and-edit-layout') {
+    $submitHandlers = $form_state->getSubmitHandlers();
+    $submitHandlers[] = 'layout_builder_save_and_edit_layout_submit_handler';
+    $form_state->setSubmitHandlers($submitHandlers);
+  }
+}
+
+/**
+ * Submit callback to set the redirect for layout builder save and edit.
+ */
+function layout_builder_save_and_edit_layout_submit_handler(array &$form, FormStateInterface $form_state) {
+  $trigger = $form_state->getTriggeringElement();
+
+  // If redirect_url has not been configured, set it now.
+  if (empty($trigger['#redirect_url'])) {
+    $entity = $form_state->getFormObject()->getEntity() ?? NULL;
+    if (!empty($entity) && !empty($entity->id())) {
+      $entity_type_id = $entity->getEntityTypeId();
+      $route_name = "layout_builder.overrides.$entity_type_id.view";
+      $route_parameters = [
+        $entity_type_id => $entity->id(),
+      ];
+      $trigger['#redirect_url'] = Url::fromRoute($route_name, $route_parameters);
+    }
+  }
+  if ($trigger['#redirect_url']) {
+    \Drupal::request()->query->remove('destination');
+    $form_state->setRedirectUrl($trigger['#redirect_url']);
+  }
+}

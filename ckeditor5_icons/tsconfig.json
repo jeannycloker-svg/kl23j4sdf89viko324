@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "outDir": "lib",
+    "removeComments": true,
+    "module": "preserve",
+    "target": "es2016",
+    "esModuleInterop": true,
+    "moduleResolution": "bundler",
+    "paths": {},
+    "sourceMap": true,
+    "sourceRoot": "/ckeditor5_plugins",
+    "alwaysStrict": true,
+    "allowUnreachableCode": false,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "include": [
+    "./**/*.ts"
+  ],
+  "exclude": [
+    "node_modules/**/*"
+  ]
+}

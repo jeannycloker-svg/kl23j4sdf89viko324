@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * A test module for testing the redirect module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\redirect_test\Hook\RedirectTestHooks;
+use Drupal\Core\Routing\TrustedRedirectResponse;
+use Drupal\redirect\Entity\Redirect;
+
+/**
+ * Implements hook_redirect_response_alter().
+ */
+#[LegacyHook]
+function redirect_test_redirect_response_alter(TrustedRedirectResponse $response, Redirect $redirect) {
+  \Drupal::service(RedirectTestHooks::class)->redirectResponseAlter($response, $redirect);
+}

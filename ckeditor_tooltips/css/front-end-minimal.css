@@ -1,0 +1,13 @@
+/*
+ * This is the minimal styling that will be used also if the user selects to
+ * use custom styling, so that the users sees what are the tooltip triggers.
+ */
+
+/* If there is no pin, but the selected text. */
+body:not(.path-admin) .ckeditor-tooltip-text {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+body:not(.path-admin) .ckeditor-tooltip-text:hover {
+  cursor: pointer;
+}

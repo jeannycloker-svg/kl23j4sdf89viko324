@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Views Dependent Filter Test Content'
+type: vdf_test_cont
+description: ''
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

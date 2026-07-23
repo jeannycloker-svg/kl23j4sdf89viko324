@@ -1,0 +1,5 @@
+services:
+  component_blocks_test.context:
+    class: Drupal\component_blocks_test\TestNodeContext
+    tags:
+      - { name: 'context_provider' }

@@ -1,0 +1,7 @@
+name: 'Late runtime processor'
+type: module
+description: 'Process the queue on every request, this is only recommended on high latency configurations.'
+package: "Purge - processors"
+dependencies:
+  - purge:purge
+core_version_requirement: '^10.2 || ^11'

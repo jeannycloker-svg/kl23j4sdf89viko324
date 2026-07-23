@@ -1,0 +1,19 @@
+views.argument_default.token:
+  type: mapping
+  label: 'Token'
+  mapping:
+    argument:
+      type: string
+      label: 'Token'
+    process:
+      type: integer
+      label: 'Get fields raw values'
+    and_or:
+      type: string
+      label: 'Multiple values handling condition'
+    all_option:
+      type: integer
+      label: 'Send "all" if no value'
+    debug:
+      type: integer
+      label: 'Show debug'

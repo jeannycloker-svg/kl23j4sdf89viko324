@@ -1,0 +1,9 @@
+name: 'Views Dependent Filters Test'
+type: module
+core_version_requirement: ^8.8 || ^9 || ^10 || ^11
+description: 'Set up module for Views Dependent Filters testing.'
+package: Testing
+dependencies:
+  - node:node
+  - taxonomy:taxonomy
+  - views_dependent_filters:views_dependent_filters

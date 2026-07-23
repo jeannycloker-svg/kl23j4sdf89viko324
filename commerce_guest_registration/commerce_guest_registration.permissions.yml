@@ -1,0 +1,2 @@
+configure commerce_guest_registration:
+  title: 'Configure Commerce Guest Registration'

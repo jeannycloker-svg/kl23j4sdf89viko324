@@ -1,0 +1,6 @@
+name: '1. Roses'
+type: module
+description: 'Say it with flowers.'
+package: Testing
+dependencies:
+  - module_filter:module_filter

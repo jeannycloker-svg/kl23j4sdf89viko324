@@ -1,0 +1,6 @@
+name: 'Purge tests support (queues)'
+type: module
+description: "Provides queues for testing."
+package: Testing
+dependencies:
+  - purge:purge

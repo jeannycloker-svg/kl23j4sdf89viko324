@@ -1,0 +1,10 @@
+name: 'Path Redirect Import'
+type: module
+description: 'Bulk handling of redirects'
+core_version_requirement: '^9.3||^10'
+package: 'Migration'
+configure: 'entity.redirect.migrate'
+dependencies:
+  - migrate_source_csv:migrate_source_csv
+  - migrate_tools:migrate_tools (>=6.0.4)
+  - redirect:redirect

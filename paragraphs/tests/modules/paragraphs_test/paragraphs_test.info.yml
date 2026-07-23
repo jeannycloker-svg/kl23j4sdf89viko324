@@ -1,0 +1,8 @@
+name: Paragraphs test
+type: module
+description: Resources for Paragraphs tests
+hidden: true
+package: Testing
+
+dependencies:
+  - paragraphs:paragraphs

@@ -1,0 +1,14 @@
+services:
+  splitenable_event_subscriber:
+    class: Drupal\profile_split_enable\EventSubscriber\SplitEnableSubscriber
+    tags:
+      - {name: event_subscriber}
+    calls:
+      - [setContainer, ['@service_container']]
+  profile_overrider_event_subscriber:
+    class: Drupal\profile_split_enable\EventSubscriber\ProfileOverriderSubscriber
+    tags:
+      - {name: event_subscriber}
+    arguments: ['@extension.list.profile']
+    calls:
+      - [setContainer, ['@service_container']]

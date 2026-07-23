@@ -1,0 +1,6 @@
+name: 'Layout Builder Save And Edit'
+description: 'Adds Save and Edit button to layout builder page.'
+core_version_requirement: ^10 || ^11
+type: module
+dependencies:
+  - drupal:layout_builder

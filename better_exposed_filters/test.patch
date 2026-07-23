@@ -1,0 +1,109 @@
+diff --git a/js/auto_submit.js b/js/auto_submit.js
+index 6a9b45f7413c01084e26b6c637e0a62867c4f13c..7e973414ea555f767cdd1a9193dc382df9b8b86f 100644
+--- a/js/auto_submit.js
++++ b/js/auto_submit.js
+@@ -54,13 +54,16 @@
+         selectors = 'form[data-bef-auto-submit-full-form], [data-bef-auto-submit-full-form] form, [data-bef-auto-submit]';
+       }
+ 
+-      $(selectors, context).addBack(selectors).find('input:text:not(.hasDatepicker), textarea, select').each(function () {
++      $(selectors, context).addBack(selectors).find('input:text:not(.hasDatepicker), textarea, select, input:radio').each(function () {
+         const $el = $(this);
+         const $valueLength = $el.val().length * 2;
+         const $tagName = $el[0].tagName;
+         if ($tagName === 'SELECT') {
+           setFocus($el);
+         }
++        else if ($el.attr('type') === 'radio') {
++          setFocus($el);
++        }
+         else {
+           $el[0].setSelectionRange($valueLength, $valueLength);
+           setFocus($el, $valueLength);
+@@ -73,8 +76,19 @@
+           entries.forEach(entry => {
+             if (entry.isIntersecting) {
+               const $lastTriggeredSelector = $(settings.bef_autosubmit_target).attr('data-drupal-selector');
+-              if ($el.attr('data-drupal-selector') && $el.attr('data-drupal-selector') === $lastTriggeredSelector) {
+-                $el.focus();
++              const currentSelector = $el.attr('data-drupal-selector');
++
++              if ($lastTriggeredSelector && currentSelector) {
++                // Extract the base selector without the hash suffix
++                const lastTriggeredBase = $lastTriggeredSelector.replace(/-[a-z0-9]{11}$/, '');
++                const currentBase = currentSelector.replace(/-[a-z0-9]{11}$/, '');
++
++                // Match if the base selectors are the same, or if current element is within
++                // the same fieldset as the triggered element
++                if (currentBase === lastTriggeredBase ||
++                    currentSelector.startsWith(lastTriggeredBase + '-')) {
++                  $el.focus();
++                }
+               }
+             }
+           });
+diff --git a/tests/src/FunctionalJavascript/BetterExposedFiltersAutoSubmitTest.php b/tests/src/FunctionalJavascript/BetterExposedFiltersAutoSubmitTest.php
+index 3dd5c821db831d87504b9a155e8f050b5ea5137d..accd63b4d67c8483625be102f0f30b1a5f4e3dee 100644
+--- a/tests/src/FunctionalJavascript/BetterExposedFiltersAutoSubmitTest.php
++++ b/tests/src/FunctionalJavascript/BetterExposedFiltersAutoSubmitTest.php
+@@ -294,6 +294,60 @@ class BetterExposedFiltersAutoSubmitTest extends BetterExposedFiltersTestBase {
+     $this->assertEquals('edit-term-node-tid-depth', $active_selector, 'Element with correct data-drupal-selector has focus.');
+   }
+ 
++  /**
++   * Tests that auto submit radio buttons work and gain focus on ajax reload.
++   *
++   * @throws \Behat\Mink\Exception\ResponseTextException
++   */
++  public function testAutoSubmitWithRadios(): void {
++
++    $view = Views::getView('bef_test');
++
++    // Convert filter to radios by setting multiple = FALSE.
++    $view->storage->getDisplay('default')['display_options']['filters']['field_bef_letters_value']['expose']['multiple'] = FALSE;
++    $view->storage->save();
++
++    // Configure BEF settings for the filter.
++    $this->setBetterExposedOptions($view, [
++      'filter' => [
++        'field_bef_letters_value' => [
++          'plugin_id' => 'bef',
++        ],
++      ],
++    ]);
++
++    $this->turnAjaxOn();
++
++    // Visit the bef-test page.
++    $this->drupalGet('bef-test');
++
++    $session = $this->getSession();
++    $page = $session->getPage();
++
++    $this->assertSession()->pageTextContains('Page One');
++    $this->assertSession()->pageTextContains('Page Two');
++
++    // Select radio button for 'b' to filter to only "Page Two".
++    $radio_b = $page->find('css', 'input[name="field_bef_letters_value"][value="b"]');
++    $this->assertNotNull($radio_b, 'Radio button for value "b" should exist');
++
++    // Trigger the radio button change and auto-submit.
++    $radio_b->click();
++
++    $this->assertSession()->assertWaitOnAjaxRequest();
++
++    $this->assertSession()->pageTextContains('Page Two');
++    $this->assertSession()->pageTextNotContains('Page One');
++
++    $this->assertTrue($radio_b->isChecked(), 'Radio button for value "b" should be selected');
++
++    // Check focus restoration.
++    $active_selector = $this->getSession()->evaluateScript('document.activeElement.getAttribute("data-drupal-selector")');
++    $expected_selector = $radio_b->getAttribute('data-drupal-selector');
++    $this->assertEquals($expected_selector, $active_selector, 'The clicked radio button should regain focus after AJAX submission.');
++
++  }
++
+   /**
+    * Tests auto submit sort only.
+    *

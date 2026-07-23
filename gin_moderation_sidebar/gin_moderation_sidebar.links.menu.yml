@@ -1,0 +1,5 @@
+gin_moderation_sidebar.settings:
+  title: 'Gin Moderation Sidebar'
+  route_name: gin_moderation_sidebar.settings_form
+  parent: system.admin_config_ui
+  description: 'Configure Gin Moderation Sidebar.'

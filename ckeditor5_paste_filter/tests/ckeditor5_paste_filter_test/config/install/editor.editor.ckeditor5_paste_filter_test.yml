@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.ckeditor5_paste_filter_test
+  module:
+    - ckeditor5
+format: ckeditor5_paste_filter_test
+editor: ckeditor5
+settings:
+  toolbar:
+    items:
+      - sourceEditing
+  plugins:
+    ckeditor5_paste_filter_pasteFilter:
+      enabled: true
+      filters:
+        -
+          enabled: true
+          weight: 1
+          search: Hello
+          replace: World
+        -
+          enabled: false
+          weight: 2
+          search: Before
+          replace: After
+        -
+          enabled: true
+          weight: 3
+          search: Third!
+          replace: 3rd!
+    ckeditor5_sourceEditing:
+      allowed_tags: {  }
+image_upload:
+  status: false

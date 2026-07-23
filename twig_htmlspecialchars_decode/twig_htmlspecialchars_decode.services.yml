@@ -1,0 +1,5 @@
+services:
+  twig_htmlspecialchars_decode.twig.TwigHtmlSpecialCharsDecode:
+    class: Drupal\twig_htmlspecialchars_decode\TwigHtmlSpecialCharsDecode
+    tags:
+      - { name: twig.extension }

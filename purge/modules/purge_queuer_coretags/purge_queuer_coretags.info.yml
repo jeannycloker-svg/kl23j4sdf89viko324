@@ -1,0 +1,7 @@
+name: 'Core tags queuer'
+type: module
+description: 'Queues every tag that Drupal invalidates internally.'
+package: "Purge - queuers"
+dependencies:
+  - purge:purge
+core_version_requirement: '^10.2 || ^11'

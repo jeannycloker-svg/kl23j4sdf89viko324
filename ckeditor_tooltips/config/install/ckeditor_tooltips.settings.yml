@@ -1,0 +1,10 @@
+follow_cursor: '0'
+prevent_overflow: 0
+allow_html: 1
+interactive: 1
+max_width: '500'
+skidding: '0'
+distance: '15'
+trigger: click
+animations: scale
+custom_styling: 0

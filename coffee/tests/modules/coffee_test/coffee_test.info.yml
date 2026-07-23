@@ -1,0 +1,6 @@
+name: 'Coffee module tests'
+type: module
+description: 'Support module for coffee testing.'
+package: Testing
+dependencies:
+  - drupal:node

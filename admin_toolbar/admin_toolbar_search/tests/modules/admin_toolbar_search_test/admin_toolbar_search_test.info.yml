@@ -1,0 +1,9 @@
+# Info file for a test-only module used to test Admin Toolbar Search.
+name: 'Admin Toolbar Search Test'
+type: module
+description: 'Provides a module with an accessible configuration link, for testing Admin Toolbar Search.'
+package: Testing
+core_version_requirement: ^9.5 || ^10 || ^11
+# Link to the module's configuration form, used by Admin Toolbar Search to
+# build an additional search link/suggestion for this module.
+configure: admin_toolbar_search_test.settings

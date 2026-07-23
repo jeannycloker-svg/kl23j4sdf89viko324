@@ -1,0 +1,6 @@
+name: Mailsystem Test
+type: module
+package: Testing
+hidden: true
+dependencies:
+  - mailsystem:mailsystem

@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+
+  extlink.setting_save.subscriber:
+    class: Drupal\extlink\EventSubscriber\ExtlinkSettingsSaveEventSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  Drupal\extlink\Hook\ExtlinkHooks:
+    class: Drupal\extlink\Hook\ExtlinkHooks

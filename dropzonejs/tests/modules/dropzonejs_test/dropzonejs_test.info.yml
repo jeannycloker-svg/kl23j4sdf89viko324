@@ -1,0 +1,8 @@
+name: 'DropzoneJS Test'
+type: module
+description: 'Support module for DropzoneJS tests.'
+package: Testing
+dependencies:
+ - drupal:media
+ - dropzonejs:dropzonejs
+ - dropzonejs:dropzonejs_eb_widget

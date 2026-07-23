@@ -1,0 +1,12 @@
+name: Component blocks test
+description: 'Contains test component blocks'
+core_version_requirement: ^8.8 || ^9.0 || ^10.0 || ^11
+type: module
+components:
+  namespaces:
+    component_blocks_test:
+      - ./components
+dependencies:
+  - components:components
+  - component_blocks:component_blocks
+  - drupal:node

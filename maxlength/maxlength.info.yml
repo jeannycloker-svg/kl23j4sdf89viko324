@@ -1,0 +1,5 @@
+name: MaxLength
+type: module
+description: 'Sets a character limit and shows a character count on titles and text fields.'
+core_version_requirement: ^10 || ^11
+package: Fields

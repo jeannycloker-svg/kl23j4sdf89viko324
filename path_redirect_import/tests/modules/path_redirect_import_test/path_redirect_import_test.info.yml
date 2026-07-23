@@ -1,0 +1,5 @@
+name: Migrate Source CSV Test
+type: module
+package: Testing
+dependencies:
+  - path_redirect_import:path_redirect_import

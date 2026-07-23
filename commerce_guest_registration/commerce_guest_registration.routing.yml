@@ -1,0 +1,9 @@
+commerce_guest_registration.settings:
+  path: '/admin/commerce/config/commerce_guest_registration'
+  defaults:
+    _form: '\Drupal\commerce_guest_registration\Form\CommerceGuestRegistrationConfigForm'
+    _title: 'Commerce Guest Registration'
+  requirements:
+    _permission: 'configure commerce_guest_registration'
+  options:
+    _admin_route: TRUE

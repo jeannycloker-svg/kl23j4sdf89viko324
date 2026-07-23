@@ -1,0 +1,17 @@
+version: "2.1"
+
+services:
+  # CLI
+  cli:
+    extends:
+      file: ${HOME}/.docksal/stacks/services.yml
+      service: cli
+    environment:
+      - PATH=/var/www/vendor/bin:$PATH
+      - PHP_IDE_CONFIG=serverName=${VIRTUAL_HOST}
+      - XDEBUG_CONFIG=remote_enable=1 remote_mode=req remote_port=9000 remote_host=ui-patterns-extends.docksal remote_connect_back=0
+      - DOCKSAL=1
+      - COMPOSER_MEMORY_LIMIT=-1
+      - SYMFONY_DEPRECATIONS_HELPER=weak
+      - COMPOSER_DEFAULT_VERSION=2
+  # Solr

@@ -1,0 +1,6 @@
+name: Admin Toolbar Extra Tools
+description: Adds menu links like Flush cache, Run cron, Run updates, and Logout under Drupal icon.
+package: Administration
+configure: admin_toolbar_tools.settings
+type: module
+core_version_requirement: ^9.5 || ^10 || ^11

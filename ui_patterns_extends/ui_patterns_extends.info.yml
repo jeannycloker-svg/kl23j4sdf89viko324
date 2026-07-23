@@ -1,0 +1,8 @@
+name: UI Patterns Extends
+type: module
+description: Extend pattern configuration
+package: User interface
+core_version_requirement: ^8 || ^9 || ^10 || ^11
+dependencies:
+  - ui_patterns:ui_patterns
+  - token:token

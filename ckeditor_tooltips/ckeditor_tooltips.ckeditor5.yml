@@ -1,0 +1,29 @@
+# This is the final one
+ckeditor_tooltips_ckeditor_tooltip:
+  ckeditor5:
+    plugins:
+      - CkeditorTooltip.CkeditorTooltip
+  drupal:
+    label: CKEditor Tooltip
+    # The library loaded while using the editor.
+    library: ckeditor_tooltips/ckeditor-tooltip
+    admin_library: ckeditor_tooltips/admin.ckeditor-tooltips
+    toolbar_items:
+      # This should match the name of the corresponding plugin exported in the
+      # plugin's index.js.
+      CkeditorTooltip:
+        label: CKEditor Tooltips
+    elements:
+      - <span>
+      - <span data-tippy-content>
+      - <span data-tooltip-title>
+      - <span data-tooltip-content>
+      - <span data-tooltip-data>
+      - <span data-tooltip-placeholder-is-selection>
+      - <span data-tooltip-placeholder-is-selection-text>
+      - <span class="ckeditor-tooltip-text">
+      # *Additional configuration properties*
+      # conditions: for setting additional criteria that must be met for the
+      #   plugin to be active.
+      # class: Optional PHP class that makes it possible for the plugin to provide
+      #   dynamic values, or a configuration UI.

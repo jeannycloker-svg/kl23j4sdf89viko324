@@ -1,0 +1,5 @@
+
+services:
+  Drupal\redirect_test\Hook\RedirectTestHooks:
+    class: Drupal\redirect_test\Hook\RedirectTestHooks
+    autowire: true

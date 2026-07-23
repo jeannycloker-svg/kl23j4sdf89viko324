@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * @file
+ * Section library resuable update hooks.
+ */
+
+use Drupal\block_content\Entity\BlockContent;
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Section library module.
+ */
+
+/**
+ * Fix block_usage table.
+ */
+function section_library_reusable_update_8001() {
+  $block_storage = \Drupal::entityTypeManager()->getStorage('block_content');
+  $blocks = $block_storage->getQuery()->condition(
+    'type',
+    'section_library_reusable'
+  )->accessCheck(FALSE)->execute();
+  foreach ($blocks as $layout_entity_id) {
+    $block = BlockContent::load($layout_entity_id);
+    $inline_block_ids = \Drupal::service('section_library_reusable.manager')
+      ->getInlineBlockIdsForEntity($block);
+    foreach ($inline_block_ids as $inline_block_id) {
+      $result = \Drupal::database()->select('inline_block_usage')->fields(
+        'inline_block_usage',
+        ['block_content_id']
+      )->condition('block_content_id', $inline_block_id)->condition(
+        'layout_entity_id',
+        NULL,
+        'is null')->execute()->fetchCol(0);
+      if (isset($result[0])) {
+        \Drupal::database()->update('inline_block_usage')->fields(
+          ['layout_entity_id' => $layout_entity_id]
+        )->condition('block_content_id', $inline_block_id)->execute();
+      }
+    }
+  }
+}

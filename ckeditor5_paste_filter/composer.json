@@ -1,0 +1,6 @@
+{
+  "name": "drupal/ckeditor5_paste_filter",
+  "description": "Filter content pasted into CKEditor 5",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later"
+}

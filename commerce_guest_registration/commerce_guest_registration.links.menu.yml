@@ -1,0 +1,5 @@
+commerce_guest_registration.configuration:
+  title: 'Commerce Guest Registration'
+  route_name: 'commerce_guest_registration.settings'
+  parent: 'commerce_order.configuration'
+  weight: -5

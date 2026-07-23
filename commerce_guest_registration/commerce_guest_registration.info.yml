@@ -1,0 +1,9 @@
+name: 'Commerce Guest Registration'
+type: module
+description: 'This is a addon module of Drupal commerce. Which help to create guest account if user email not exist in system.'
+core_version_requirement: ^8 || ^9
+package: 'commerce'
+configure: commerce_guest_registration.settings
+dependencies:
+  - commerce:commerce
+  - commerce:commerce_checkout

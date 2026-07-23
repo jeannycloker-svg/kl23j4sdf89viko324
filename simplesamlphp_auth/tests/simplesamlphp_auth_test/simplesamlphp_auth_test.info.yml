@@ -1,0 +1,7 @@
+name: 'SimpleSAMLPHP Authentication Test module'
+type: module
+description: 'Support module for SimpleSAMLPHP Authentication tests'
+package: Testing
+dependencies:
+  - drupal:user
+hidden: true

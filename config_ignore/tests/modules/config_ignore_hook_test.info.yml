@@ -1,0 +1,7 @@
+name: Config Ignore Hook Test
+type: module
+description: Module that implements all the hook from Config Ignore for testing purposes
+package: Testing
+hidden: true
+dependencies:
+  - config_ignore

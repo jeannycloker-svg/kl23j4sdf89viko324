@@ -1,0 +1,67 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for the CKEditor Tooltips module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function ckeditor_tooltips_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the ckeditor_tooltips module.
+    case 'help.page.ckeditor_tooltips':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('CKEditor Tooltips') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function ckeditor_tooltips_page_attachments_alter(array &$page) {
+  $config = \Drupal::config('ckeditor_tooltips.settings');
+
+  $page['#attached']['library'][] = 'ckeditor_tooltips/tippyjs';
+  // Animations.
+  if (empty($config->get('animations')) || $config->get('animations') === 'scale') {
+    $page['#attached']['library'][] = 'ckeditor_tooltips/tippy-animation-scale';
+  }
+
+  // Default styling.
+  $page['#attached']['library'][] = 'ckeditor_tooltips/front-end-js';
+  if (empty($config->get('custom_styling'))) {
+    $page['#attached']['library'][] = 'ckeditor_tooltips/front-end-styling';
+    $page['#attached']['library'][] = 'ckeditor_tooltips/tippy-overrides';
+  }
+
+  // Offset.
+  $skidding = intval($config->get('skidding')) ?? 0;
+  $distance = intval($config->get('distance')) ?? 15;
+
+  $page['#attached']['drupalSettings']['ckeditor_tooltips'] = [
+    'followCursor' => $config->get('follow_cursor') ?: FALSE,
+    'interactive' => $config->get('interactive') ?? 1,
+    'allowHTML' => $config->get('allow_html') ?? 1,
+    'maxWidth' => intval($config->get('max_width')) ?? 500,
+    'trigger' => $config->get('trigger') ?? 'click',
+    'offset' => [$skidding, $distance],
+    'animation' => $config->get('animations') ?? 'scale',
+    'inertia' => TRUE,
+  ];
+  if (!empty($config->get('prevent_overflow'))) {
+    $page['#attached']['drupalSettings']['ckeditor_tooltips']['popperOptions']['modifiers'][] = [
+      'name' => 'preventOverflow',
+      'options' => [
+        'altAxis' => $config->get('prevent_overflow'),
+      ],
+    ];
+  }
+}

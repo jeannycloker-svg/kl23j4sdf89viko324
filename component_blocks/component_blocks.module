@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * @file
+ * Contains main module functions.
+ */
+
+use Drupal\Component\Utility\NestedArray;
+
+/**
+ * Implements hook_theme().
+ */
+function component_blocks_theme($existing, $type, $theme, $path) {
+  return [
+    'field__component_block' => [
+      'render element' => 'element',
+      'base hook' => 'field',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function component_blocks_theme_suggestions_block_alter(&$hooks, &$vars) {
+  if ($storage = \Drupal::routeMatch()->getParameter('section_storage')) {
+    // This is layout builder.
+    return;
+  }
+  if (isset($vars['elements']['#base_plugin_id']) && $vars['elements']['#base_plugin_id'] === 'component_blocks') {
+    $hooks[] = 'block__bare';
+    if (!empty($vars['elements']['#attributes'])) {
+      if (!empty($vars['elements']['content']['#attributes'])) {
+        // Push the wrapper attributes down to the content.
+        $vars['elements']['content']['#attributes'] = NestedArray::mergeDeep($vars['content']['#attributes'], $vars['elements']['#attributes']);
+        return;
+      }
+      if (is_array($vars['elements']['content'])) {
+        $vars['elements']['content']['#attributes'] = $vars['elements']['#attributes'];
+      }
+    }
+  }
+}

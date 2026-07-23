@@ -1,0 +1,59 @@
+# HM Display Profile list
+entity.hm_display_profile.collection:
+  path: '/admin/structure/hm_display_profile'
+  defaults:
+    _entity_list: 'hm_display_profile'
+    _title: 'HM Display Profiles'
+  requirements:
+    _permission: 'administer site configuration'
+    
+# Hierarchy Manager Configuration
+hierarchy_manager.hm_config_form:
+  path: '/admin/config/user-interface/hierarchy_manager/config'
+  defaults:
+    _form: '\Drupal\hierarchy_manager\Form\HMConfigForm'
+    _title: 'Hierarchy Manager'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE
+
+# Taxonomy hierarchy plugin.
+hierarchy_manager.taxonomy.tree.json:
+  path: '/admin/hierarchy_manager/taxonomy/json/{vid}'
+  defaults:
+    _title: 'Taxonomy tree'
+    _controller: '\Drupal\hierarchy_manager\Controller\HmTaxonomyController::taxonomyTreeJson'
+  requirements:
+    _custom_access: '\Drupal\hierarchy_manager\Controller\HmTaxonomyController::access'
+  options:
+    _admin_route: TRUE
+hierarchy_manager.taxonomy.tree.update:
+  path: '/admin/hierarchy_manager/taxonomy/update/{vid}'
+  defaults:
+    _title: 'Taxonomy tree'
+    _controller: '\Drupal\hierarchy_manager\Controller\HmTaxonomyController::updateTerms'
+  requirements:
+    _custom_access: '\Drupal\hierarchy_manager\Controller\HmTaxonomyController::access'
+  options:
+    _admin_route: TRUE   
+ 
+ # Menu hierarchy plugin.
+hierarchy_manager.menu.tree.json:
+  path: '/admin/hierarchy_manager/menu/json/{mid}'
+  defaults:
+    _title: 'Menu tree'
+    _controller: '\Drupal\hierarchy_manager\Controller\HmMenuController::menuTreeJson'
+  requirements:
+    _permission: 'administer menu'
+  options:
+    _admin_route: TRUE
+hierarchy_manager.menu.tree.update:
+  path: '/admin/hierarchy_manager/menu/update/{mid}'
+  defaults:
+    _title: 'Menu tree'
+    _controller: '\Drupal\hierarchy_manager\Controller\HmMenuController::updateMenuLinks'
+  requirements:
+    _permission: 'administer menu'
+  options:
+    _admin_route: TRUE   

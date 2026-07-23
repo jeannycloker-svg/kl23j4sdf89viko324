@@ -1,0 +1,8 @@
+name: 'CKEditor Tooltips'
+type: module
+description: 'CKEditor Tooltips'
+configure: ckeditor_tooltips.settings
+core_version_requirement: ^9.5 || ^10 || ^11
+package: 'CKEditor'
+dependencies:
+  - drupal:ckeditor5

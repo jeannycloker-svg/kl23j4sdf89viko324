@@ -1,0 +1,7 @@
+name: CKEditor 5 Paste Filter
+type: module
+description: Filter content pasted into CKEditor 5
+package: CKEditor 5
+core_version_requirement: ^9.3 || ^10 || ^11 || ^12
+dependencies:
+  - drupal:ckeditor5

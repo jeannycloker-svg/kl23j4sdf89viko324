@@ -1,0 +1,6 @@
+name: Twig Tweak
+type: module
+description: 'Provides some extra Twig functions and filters.'
+core_version_requirement: ^11.2
+dependencies:
+  - drupal:system (>=11.2)

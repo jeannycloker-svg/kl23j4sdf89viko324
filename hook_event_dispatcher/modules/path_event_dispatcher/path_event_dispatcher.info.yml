@@ -1,0 +1,8 @@
+name: Path Event Dispatcher
+type: module
+description: Dispatches events for multiple path hooks
+core_version_requirement: ^9.3
+package: Hook events
+dependencies:
+  - hook_event_dispatcher:core_event_dispatcher
+  - drupal:path

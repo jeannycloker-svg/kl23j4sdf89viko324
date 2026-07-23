@@ -1,0 +1,10 @@
+name: Layout Builder Search API
+type: module
+description: Support for indexing Layout Builder blocks
+package: Custom
+core_version_requirement: ^8 || ^9 || ^10 || ^11
+
+dependencies:
+  - drupal:language
+  - search_api:search_api
+  - drupal:layout_builder

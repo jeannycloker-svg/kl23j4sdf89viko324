@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Contains legacy hooks for Menu tree module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\menu_tree\Hook\Hooks;
+
+/**
+ * Implements hook_help().
+ */
+#[LegacyHook]
+function menu_tree_help($route_name, RouteMatchInterface $route_match) : string|\Stringable|array|null {
+  return \Drupal::service(Hooks::class)->help($route_name, $route_match);
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+#[LegacyHookModuleImplementsAlter]
+function menu_tree_module_implements_alter(&$implementations, $hook) : void {
+  if (
+    $hook === 'form_node_form_alter'
+    || $hook === 'form_node_type_form_alter'
+  ) {
+    $implementation = $implementations['menu_tree'];
+    unset($implementations['menu_tree']);
+    $implementations['menu_tree'] = $implementation;
+  }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+#[LegacyHook]
+function menu_tree_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) : void {
+  \Drupal::service(Hooks::class)->nodeFormAlter($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+#[LegacyHook]
+function menu_tree_form_node_type_form_alter(&$form, FormStateInterface $form_state, $form_id) : void {
+  \Drupal::service(Hooks::class)->nodeTypeFormAlter($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+#[LegacyHook]
+function menu_tree_preprocess_form_element_label(&$variables) : void {
+  \Drupal::service(Hooks::class)->preprocessFormElementLabel($variables);
+}

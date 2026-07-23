@@ -1,0 +1,6 @@
+name: 'Media Library Form Element'
+type: module
+description: 'A Form API element to select / add new media item.'
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - drupal:media_library

@@ -1,0 +1,12 @@
+section_library_reusable_wrapper:
+  label: 'Section library reusable wrapper'
+  path: layouts/section-library-reusable-wrapper
+  template: section-library-reusable-wrapper
+  library: layout_discovery/onecol
+  category: 'Columns: 1'
+  default_region: content
+  icon_map:
+    - [content]
+  regions:
+    content:
+      label: Content

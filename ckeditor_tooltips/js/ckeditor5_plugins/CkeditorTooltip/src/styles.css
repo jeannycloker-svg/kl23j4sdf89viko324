@@ -1,0 +1,43 @@
+/* styles.css */
+
+.ck.ck-cke-tooltip-form {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  grid-auto-rows: auto;
+  gap: var(--ck-spacing-medium);
+  padding: var(--ck-spacing-large);
+}
+
+/* Title and Content span all columns */
+.ck.ck-cke-tooltip-form .ck-labeled-field-view:nth-of-type(1),
+.ck.ck-cke-tooltip-form .ck-labeled-field-view:nth-of-type(2) {
+  grid-column: 1 / 4;
+  margin: 0;
+}
+
+/* Add space only between Title and Content */
+.ck.ck-cke-tooltip-form .ck-labeled-field-view:nth-of-type(1) {
+  margin-bottom: var(--ck-spacing-small);
+}
+
+/* Save and Cancel inline on right */
+.ck.ck-cke-tooltip-form .ck-button-save {
+  grid-column: 1;
+  justify-self: end;
+}
+.ck.ck-cke-tooltip-form .ck-button-cancel {
+  grid-column: 2;
+  justify-self: start;
+}
+.ck.ck-cke-tooltip-form .ck-button-delete {
+  grid-column: 3;
+  justify-self: start;
+}
+
+/* Textarea appearance inside tooltip editor */
+.ck-tooltip-textarea {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.4;
+  font-family: inherit;
+}

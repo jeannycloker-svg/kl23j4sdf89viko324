@@ -1,0 +1,26 @@
+ckeditor5.plugin.ckeditor5_paste_filter_pasteFilter:
+  type: mapping
+  label: "Paste Filter"
+  mapping:
+    enabled:
+      type: boolean
+      label: "Plugin enabled"
+    filters:
+      type: sequence
+      label: "Filters"
+      sequence:
+        type: mapping
+        label: "Filter settings"
+        mapping:
+          enabled:
+            type: boolean
+            label: "Enabled"
+          weight:
+            type: integer
+            label: "Weight"
+          search:
+            type: text
+            label: "Search regular expression"
+          replace:
+            type: text
+            label: "Replacement"

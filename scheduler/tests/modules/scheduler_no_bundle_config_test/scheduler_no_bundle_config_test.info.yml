@@ -1,0 +1,7 @@
+name: Scheduler No-bundle Config Test
+type: module
+description: 'Ships default Scheduler settings for a no-bundle entity type via config/install, to test the standalone config_object schema.'
+package: Testing
+dependencies:
+  - scheduler:scheduler
+  - scheduler:scheduler_no_bundle_test

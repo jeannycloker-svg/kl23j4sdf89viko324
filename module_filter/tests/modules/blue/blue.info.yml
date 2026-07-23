@@ -1,0 +1,6 @@
+name: '3. Ridge'
+type: module
+description: 'Mountains of Virginia.'
+package: Testing
+dependencies:
+  - module_filter:module_filter

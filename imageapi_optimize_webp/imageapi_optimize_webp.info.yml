@@ -1,0 +1,7 @@
+name: 'ImageAPI Optimize WebP'
+type: module
+description: 'Provides a WebP processor to derive webp images from other file formats.'
+core_version_requirement: ^10.3 || ^11
+package: 'Image Optimize'
+dependencies:
+  - imageapi_optimize:imageapi_optimize

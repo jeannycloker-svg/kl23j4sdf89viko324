@@ -1,0 +1,9 @@
+{% if title_suffix %}
+  {# Contextual links support #}
+  {{ title_suffix }}
+{% endif %}
+{% apply spaceless %}{% for item in items %}
+  {% block content %}
+    {{- item.content -}}
+  {% endblock %}
+{% endfor %}{% endapply %}

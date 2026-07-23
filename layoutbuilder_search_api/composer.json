@@ -1,0 +1,24 @@
+{
+    "name": "drupal/layoutbuilder_search_api",
+    "description": "Support for indexing Layout Builder blocks",
+    "type": "drupal-module",
+    "homepage": "https://www.drupal.org/project/layoutbuilder_search_api",
+    "authors": [
+        {
+            "name": "Lucas Hedding",
+            "homepage": "https://www.drupal.org/u/heddn"
+        },
+        {
+            "name": "Jon Minder",
+            "homepage": "https://www.drupal.org/u/ayalon"
+        }
+    ],
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/layoutbuilder_search_api"
+    },
+    "license": "GPL-2.0+",
+    "minimum-stability": "dev",
+    "require": {
+        "drupal/search_api": "^1"
+    }
+}

@@ -1,0 +1,35 @@
+component_blocks.context_variable:
+  type: mapping
+  label: Context variable
+  mapping:
+    type:
+      type: string
+      label: 'Formatter'
+    source:
+      type: string
+      label: 'Source field'
+    value:
+      type: string
+      label: 'Fixed value'
+    settings:
+      type: field.formatter.settings.[%parent.type]
+      label: 'Settings'
+
+block.settings.component_blocks:*:*:
+  type: block_settings
+  label: 'Component block settings'
+  mapping:
+    variant:
+      type: string
+      label: 'Variant'
+    variables:
+      type: sequence
+      label: 'Properties'
+      sequence:
+        type: component_blocks.context_variable
+    settings:
+      type: sequence
+      label: 'Settings'
+      sequence:
+        type: string
+        label: 'Setting'

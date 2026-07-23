@@ -1,0 +1,52 @@
+.colorwidget .form-radios {
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: .5rem;
+}
+
+.colorwidget .form-type--radio .form-item__label {
+  display: none;
+  visibility: hidden;
+  z-index: 1;
+  position: absolute;
+  top: 100%;
+  left: -10px;
+  padding: .5rem;
+  color: #eee !important;
+  background: #222330;
+  border-radius: 4px;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+.colorwidget .form-type--radio:hover .form-item__label {
+  display: block;
+  visibility: visible;
+}
+
+.colorwidget .form-type--radio {
+  border-radius: 50%;
+  position: relative;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+}
+
+.colorwidget .form-type--radio input {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  margin-right: .5rem;
+  border-color: #d4d4d8;
+  transform: translateY(0);
+  margin-top: -20px;
+}
+
+.colorwidget .form-type--radio input:checked {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #222330;
+  border-color: transparent;
+}
+.colorwidget .form-type--radio input.color-css--transparent {
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1) 0), white;
+  background-position: 0px 0, 5px 5px;
+  background-size: 10px 10px, 10px 10px;
+}

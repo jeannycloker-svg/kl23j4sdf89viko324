@@ -1,0 +1,8 @@
+phpoffice
+phpspreadsheet
+autosize
+argb
+openxmlformats
+officedocument
+spreadsheetml
+formating

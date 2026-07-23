@@ -1,0 +1,56 @@
+<?php
+
+/**
+ * @file
+ * Contains hook implementations for gin_moderation_sidebar.
+ */
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function gin_moderation_sidebar_preprocess_html(&$variables) {
+  // Ensure gin is active.
+  if (function_exists('_gin_toolbar_gin_is_active') && !_gin_toolbar_gin_is_active()) {
+    return;
+  }
+
+  $tab_style = Html::getClass(\Drupal::config('gin_moderation_sidebar.settings')->get('tab_style') ?? 'default');
+  $variables['attributes']['class'][] = 'gms--tab-style-' . $tab_style;
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function gin_moderation_sidebar_preprocess_page(&$variables) {
+  // Ensure gin is active.
+  if (function_exists('_gin_toolbar_gin_is_active') && !_gin_toolbar_gin_is_active()) {
+    return;
+  }
+
+  $variables['#attached']['library'][] = 'gin_moderation_sidebar/main';
+}
+
+/**
+ * Implements hook_help().
+ */
+function gin_moderation_sidebar_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.gin_moderation_sidebar':
+      $text = file_get_contents(__DIR__ . '/README.md');
+      if (!\Drupal::moduleHandler()->moduleExists('markdown')) {
+        return '<pre>' . Html::escape($text) . '</pre>';
+      }
+      else {
+        // Use the Markdown filter to render the README.
+        $filter_manager = \Drupal::service('plugin.manager.filter');
+        $settings = \Drupal::configFactory()->get('markdown.settings')->getRawData();
+        $config = ['settings' => $settings];
+        $filter = $filter_manager->createInstance('markdown', $config);
+        return $filter->process($text, 'en');
+      }
+  }
+  return '';
+}

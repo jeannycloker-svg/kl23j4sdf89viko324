@@ -1,0 +1,8 @@
+name: 'Taxonomy access fix test'
+type: module
+description: 'Support module for taxonomy testing.'
+package: Testing
+hidden: true
+dependencies:
+  - 'taxonomy_access_fix:taxonomy_access_fix'
+  - 'drupal:views'

@@ -1,0 +1,9 @@
+# Info file for a test-only module used to test Admin Toolbar Search.
+name: 'Admin Toolbar Search Test Restricted'
+type: module
+description: 'Provides a module with a permission-restricted configuration link, for testing Admin Toolbar Search access checks and cache invalidation on install.'
+package: Testing
+core_version_requirement: ^9.5 || ^10 || ^11
+# Link to the module's configuration form, used by Admin Toolbar Search to
+# build an additional search link/suggestion for this module.
+configure: admin_toolbar_search_test_restricted.settings

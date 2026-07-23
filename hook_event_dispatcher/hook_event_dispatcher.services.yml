@@ -1,0 +1,22 @@
+services:
+  hook_event_dispatcher.manager:
+    class: Drupal\hook_event_dispatcher\Manager\HookEventDispatcherManager
+    arguments:
+      - '@event_dispatcher'
+
+  hook_event_dispatcher.manager.legacy:
+    class: Drupal\hook_event_dispatcher\Manager\LegacyHookEventDispatcherManager
+    parent: hook_event_dispatcher.manager
+
+  hook_event_dispatcher.module_handler:
+    decorates: module_handler
+    class: Drupal\hook_event_dispatcher\HookEventDispatcherModuleHandler
+    arguments:
+      - '@hook_event_dispatcher.module_handler.inner'
+      - '@hook_event_dispatcher.manager'
+      - '@plugin.manager.hook_event'
+
+  plugin.manager.hook_event:
+    class: Drupal\hook_event_dispatcher\HookEventPluginManager
+    parent: default_plugin_manager
+    lazy: true

@@ -1,0 +1,5 @@
+name: 'Twig HTML entities decode'
+type: module
+description: 'Provides Twig filter to decode HTML entities.'
+package: Twig
+core_version_requirement: ^9 || ^10 || ^11

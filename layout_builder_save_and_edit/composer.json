@@ -1,0 +1,21 @@
+{
+  "name": "drupal/layout_builder_save_and_edit",
+  "description": "Adds Save and Edit button to layout builder page.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://www.drupal.org/project/layout_builder_save_and_edit",
+  "authors": [
+    {
+      "name": "Neslee Canil Pinto",
+      "homepage": "https://www.drupal.org/u/neslee-canil-pinto",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/layout_builder_save_and_edit",
+    "source": "https://git.drupalcode.org/project/layout_builder_save_and_edit"
+  },
+  "require": {
+    "drupal/core": "^10 || ^11"
+  }
+}

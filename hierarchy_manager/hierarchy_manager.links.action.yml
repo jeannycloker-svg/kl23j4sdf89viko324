@@ -1,0 +1,5 @@
+entity.hm_display_profile.add_form:
+  route_name: entity.hm_display_profile.add_form
+  title: 'Add HM Display Profile Entity'
+  appears_on:
+    - entity.hm_display_profile.collection

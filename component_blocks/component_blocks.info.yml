@@ -1,0 +1,12 @@
+name: Component blocks
+description: 'Provides the ability to wire up specially shaped blocks from theme components'
+core_version_requirement: ^9.0 || ^10.0 || ^11
+type: module
+dependencies:
+  - drupal:block
+  - drupal:layout_builder
+  - ui_patterns:ui_patterns
+test_dependencies:
+  - components:components
+  - ui_patterns:ui_patterns_library
+  - ui_patterns_settings:ui_patterns_settings

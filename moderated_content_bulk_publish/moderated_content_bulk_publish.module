@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * @file
+ * Moderated_content_bulk_publish module.
+ */
+
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\moderated_content_bulk_publish\Hook\ModeratedContentBulkPublishHooks;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_help().
+ */
+#[LegacyHook]
+function moderated_content_bulk_publish_help($route_name, RouteMatchInterface $route_match) {
+  return \Drupal::service(ModeratedContentBulkPublishHooks::class)->help($route_name, $route_match);
+}
+
+/**
+ * Attaches library responsible for showing a confirmation dialog.
+ *
+ * Can be attached on a node edit form, or on a views with a bulk form.
+ *
+ * @param array $render_array
+ *   Render array to attach the library to. Passed by reference.
+ * @param bool $on_view_field
+ *   Flag determining if the attachment is for the node edit form or a view.
+ *
+ * @return void
+ */
+function _moderated_content_bulk_publish_attach_dialog_library(array &$render_array, bool $on_view_field) {
+  if (\Drupal::currentUser()->isAnonymous()) {
+    return;
+  }
+  $config_name = $on_view_field ? 'enable_dialog_admin_content' : 'enable_dialog_node_edit_form';
+  $config = Drupal::config('moderated_content_bulk_publish.settings');
+  if ($config->get($config_name)) {
+    $render_array['#attached']['library'][] = 'moderated_content_bulk_publish/moderated-content-bulk-publish';
+    $render_array['#attached']['drupalSettings']['moderated_content_bulk_publish'][$config_name] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for \Drupal\node\NodeForm.
+ */
+#[LegacyHook]
+function moderated_content_bulk_publish_form_node_form_alter(&$form, FormStateInterface $form_state) {
+  \Drupal::service(ModeratedContentBulkPublishHooks::class)->formNodeFormAlter($form, $form_state);
+}
+
+/**
+ * Implements hook_views_pre_render().
+ *
+ * @see \Drupal\node\Plugin\views\field\NodeBulkForm
+ */
+#[LegacyHook]
+function moderated_content_bulk_publish_views_pre_render(ViewExecutable $view) {
+  \Drupal::service(ModeratedContentBulkPublishHooks::class)->viewsPreRender($view);
+}
+
+/**
+ * Implements hook_theme()
+ */
+#[LegacyHook]
+function moderated_content_bulk_publish_theme($existing, $type, $theme, $path) {
+  return \Drupal::service(ModeratedContentBulkPublishHooks::class)->theme($existing, $type, $theme, $path);
+}
+
+// Thanks to https://drupal.stackexchange.com/questions/270396/add-language-switcher-on-admin-toolbar
+
+/**
+ * Implements hook_toolbar() (Display a language switcher for available languages on admin toolbar if site has more than one language).
+ */
+#[LegacyHook]
+function moderated_content_bulk_publish_toolbar() {
+  return \Drupal::service(ModeratedContentBulkPublishHooks::class)->toolbar();
+}

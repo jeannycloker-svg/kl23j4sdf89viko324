@@ -1,0 +1,5 @@
+name: Config Sequences test
+type: module
+description: Create some schema with sequences to test.
+core_version_requirement: ^8.8 || ^9 || ^10
+package: Testing

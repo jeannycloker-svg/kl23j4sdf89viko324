@@ -1,0 +1,33 @@
+{
+  "name": "ckeditor5-icons",
+  "version": "1.3.0",
+  "description": "A CKEditor 5 plugin intended for Drupal which enables inserting Font Awesome icons without leaving the editor.",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "watch": "NODE_OPTIONS='--import tsx' webpack --mode development --watch",
+    "build": "NODE_OPTIONS='--import tsx' webpack",
+    "w": "run(){ webpack --mode development --watch --env plugin=\"$1\"; }; NODE_OPTIONS='--import tsx' run",
+    "b": "run(){ webpack --env plugin=\"$1\"; }; NODE_OPTIONS='--import tsx' run"
+  },
+  "devDependencies": {
+    "@ckeditor/ckeditor5-core": "~47.6.2",
+    "@ckeditor/ckeditor5-engine": "~47.6.2",
+    "@ckeditor/ckeditor5-html-support": "~47.6.2",
+    "@ckeditor/ckeditor5-icons": "~47.6.2",
+    "@ckeditor/ckeditor5-link": "~47.6.2",
+    "@ckeditor/ckeditor5-ui": "~47.6.2",
+    "@ckeditor/ckeditor5-utils": "~47.6.2",
+    "@ckeditor/ckeditor5-widget": "~47.6.2",
+    "ckeditor5": "~47.6.2",
+    "copy-webpack-plugin": "^14.0.0",
+    "fontawesome5": "npm:@fortawesome/fontawesome-free@5.15.4",
+    "fontawesome6": "npm:@fortawesome/fontawesome-free@6.7.2",
+    "raw-loader": "^4.0.2",
+    "terser-webpack-plugin": "^5.3.12",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.3",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^7.2.1"
+  }
+}

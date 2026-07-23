@@ -1,0 +1,45 @@
+easy_responsive_images.settings:
+  type: config_object
+  label: 'Easy Responsive Image settings'
+  mapping:
+    threshold_width:
+      type: string
+      label: 'Preferred amount of pixels between the width of each image style'
+    minimum_width:
+      type: string
+      label: 'Minimum image style width'
+    maximum_width:
+      type: string
+      label: 'Maximum image style width'
+    aspect_ratios:
+      type: string
+      label: 'Supported aspect ratios'
+    threshold_height:
+      type: string
+      label: 'Preferred amount of pixels between the height of each image style'
+    minimum_height:
+      type: string
+      label: 'Minimum image style height'
+    maximum_height:
+      type: string
+      label: 'Maximum image style height'
+
+field.formatter.settings.easy_responsive_images:
+  type: field.formatter.settings.image
+  mapping:
+    image_handling:
+      label: 'Image handling'
+      type: string
+      constraints:
+        Choice: ['scale', 'aspect_ratio']
+    aspect_ratio:
+      label: 'Aspect ratio'
+      type: machine_name
+    multiplier:
+      label: 'Multiplier'
+      type: string
+      constraints:
+        Choice: ['1x', '1.25x', '1.5x', '2x', '3x', '4x']
+    cover:
+      label: 'Cover'
+      type: boolean

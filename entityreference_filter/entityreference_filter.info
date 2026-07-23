@@ -1,0 +1,7 @@
+name = Views Reference Filter
+description = Provides views-based filter for entity reference and entity id fields in views.
+core = 7.x
+package = Views
+dependencies[] = entityreference
+dependencies[] = views
+files[]= views/entityreference_filter_view_result.inc

@@ -1,0 +1,5 @@
+name: ui_patterns_test_theme
+type: theme
+base theme: stable9
+description: Theme for testing ui_patterns
+core_version_requirement: ^10.3 || ^11

@@ -1,0 +1,15 @@
+# Schema for the configuration files of the Commerce Guest Registration.
+
+commerce_guest_registration.settings:
+  type: config_object
+  label: 'Commerce Guest Registration'
+  mapping:
+    send_one_time_login:
+      type: boolean
+      label: 'Send the One-Time-Login link'
+    create_new:
+      type: boolean
+      label: 'Assign orders to new accounts'
+    assign_to_existing:
+      type: boolean
+      label: 'Assign orders to existing accounts'

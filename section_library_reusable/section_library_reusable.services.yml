@@ -1,0 +1,4 @@
+services:
+  section_library_reusable.manager:
+    class: Drupal\section_library_reusable\SectionLibraryReusableManager
+    arguments: ['@uuid', '@entity_type.manager']

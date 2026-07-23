@@ -1,0 +1,47 @@
+build:
+  codebase:
+    assemble_codebase:
+      checkout_core:
+      checkout.contrib:
+      fetch:
+      patch:
+      composer.core_install:
+      composer.plugins:
+        options: config --no-plugins allow-plugins.simplesamlphp/composer-module-installer true
+      gather_dependencies:
+      update_build:
+      yarn_install:
+      start_phantomjs:
+  assessment:
+    validate_codebase:
+      phplint:
+      container_composer:
+      csslint:
+      eslint:
+      phpcs:
+    testing:
+      run_tests.standard:
+        types: 'Simpletest,PHPUnit-Unit,PHPUnit-Kernel,PHPUnit-Functional'
+        testgroups: '--all'
+        color: true
+        die-on-fail: false
+        keep-results: true
+        keep-results-table: false
+        verbose: false
+        concurrency: 30
+        halt-on-fail: false
+        repeat: 1
+        suppress-deprecations: true
+      run_tests.js:
+        concurrency: 15
+        types: PHPUnit-FunctionalJavascript
+        testgroups: '--all'
+        color: true
+        die-on-fail: false
+        keep-results: true
+        keep-results-table: false
+        verbose: false
+        halt-on-fail: false
+        repeat: 1
+        suppress-deprecations: true
+      nightwatchjs: {  }

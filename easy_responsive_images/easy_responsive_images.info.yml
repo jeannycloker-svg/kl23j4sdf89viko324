@@ -1,0 +1,8 @@
+name: 'Easy Responsive Images'
+description: 'Provides a settings form to automatically generate image styles, and a Twig Filter to use the image styles in templates.'
+type: module
+core_version_requirement: ^10 || ^11
+package: Other
+configure: easy_responsive_images.generate
+dependencies:
+  - drupal:image

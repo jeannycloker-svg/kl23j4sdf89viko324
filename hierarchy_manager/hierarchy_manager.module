@@ -1,0 +1,126 @@
+<?php
+
+/**
+ * @file
+ * General functions and hook implementations for Hierarchy Manager module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function hierarchy_manager_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the hierarchy_manager module.
+    case 'help.page.hierarchy_manager':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Hierarchy Manager module provides a flexible solution for managing hierarchies of menu links and taxonomy terms. Unlike the default Drupal draggable table, this module supports massive hierarchies and offers a plugin architecture for customization.') . '</p>';
+      $output .= '<p>' . t('Out of the box, the module comes with two plugins: a taxonomy hierarchy management plugin and a menu hierarchy plugin. The front-end JavaScript libraries are also pluginable, with an out-of-the-box display plugin using jsTree to render the hierarchy tree with a filter. The hierarchy tree is draggable, allowing you to easily update the hierarchy by dragging a node in the tree.') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function hierarchy_manager_library_info_alter(array &$libraries, $module) {
+  if ('hierarchy_manager' == $module) {
+    // Use CDN instead of all local missing libraries.
+    // jsTree min js.
+    $cdn_library = _hierarchy_manager_use_cdn($libraries, 'libraries.jquery.jstree', 'js');
+    if ($cdn_library) {
+      $libraries['libraries.jquery.jstree']['js'] = $cdn_library;
+    }
+    // jsTree default theme.
+    $cdn_library = _hierarchy_manager_use_cdn($libraries, 'libraries.jquery.jstree.default', 'css');
+    if ($cdn_library) {
+      $libraries['libraries.jquery.jstree.default']['css']['component'] = $cdn_library;
+    }
+    // jsTree dark theme.
+    $cdn_library = _hierarchy_manager_use_cdn($libraries, 'libraries.jquery.jstree.default-dark', 'css');
+    if ($cdn_library) {
+      $libraries['libraries.jquery.jstree.default-dark']['css']['component'] = $cdn_library;
+    }
+    // Jsoneditor min js.
+    $cdn_library = _hierarchy_manager_use_cdn($libraries, 'libraries.jsoneditor', 'js');
+    if ($cdn_library) {
+      $libraries['libraries.jsoneditor']['js'] = $cdn_library;
+    }
+    // Jsoneditor default theme.
+    $cdn_library = _hierarchy_manager_use_cdn($libraries, 'libraries.jsoneditor.default-theme', 'css');
+    if ($cdn_library) {
+      $libraries['libraries.jsoneditor.default-theme']['css']['component'] = $cdn_library;
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function hierarchy_manager_entity_type_alter(array &$entity_types) {
+  // Override the menu edit form.
+  if (isset($entity_types['menu'])) {
+    $entity_types['menu']
+      ->setFormClass('edit', 'Drupal\hierarchy_manager\Form\HmMenuForm');
+  }
+
+  // Override the taxonomy vocabulary overview form.
+  // This is the proper method for Drupal 11.3+ where OverviewTerms extends
+  // EntityForm and uses _entity_form route default.
+  // @see https://www.drupal.org/node/3528300
+  if (isset($entity_types['taxonomy_vocabulary'])) {
+    $entity_types['taxonomy_vocabulary']
+      ->setFormClass('overview', 'Drupal\hierarchy_manager\Form\HmOverviewTerms');
+  }
+}
+
+/**
+ * Replace local library with CDN.
+ *
+ * @param array $libraries
+ *   The libraries array.
+ * @param string $library_name
+ *   The library name.
+ * @param string $type
+ *   The library type.
+ * @param bool $replace_local
+ *   Force to replace local libraries with CDN.
+ *
+ * @return array
+ *   The new library array (CDN)
+ */
+function _hierarchy_manager_use_cdn(array $libraries, $library_name, $type, $replace_local = FALSE) {
+  if (isset($libraries[$library_name])) {
+    if (isset($libraries[$library_name][$type]) && isset($libraries[$library_name]['cdn'])) {
+      $library_array = [];
+      $updated = FALSE;
+      // CSS library has a sub-array called component.
+      if ($type === 'css') {
+        if (isset($libraries[$library_name][$type]['component'])) {
+          $local_library = $libraries[$library_name][$type]['component'];
+        }
+        else {
+          return FALSE;
+        }
+      }
+      else {
+        // Local js library.
+        $local_library = $libraries[$library_name][$type];
+      }
+      foreach ($local_library as $key => $value) {
+        if (!file_exists(DRUPAL_ROOT . $key) || $replace_local) {
+          // The js file doesn't exist.
+          // Replace it with remote cdn.
+          $library_array[$libraries[$library_name]['cdn'] . basename($key)] = $value;
+          $updated = TRUE;
+        }
+        else {
+          $library_array[$key] = $value;
+        }
+      }
+    }
+  }
+
+  return empty($updated) ? FALSE : $library_array;
+}

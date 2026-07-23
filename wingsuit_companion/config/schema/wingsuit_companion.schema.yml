@@ -1,0 +1,13 @@
+wingsuit_companion.config:
+  type: config_object
+  label: 'Wingsuit Settings'
+  mapping:
+    dist_path:
+      type: String
+      label: 'Wingsuit dist folder path. Default "/../../dist/app-drupal"'
+    only_own_layout:
+      type: boolean
+      label: 'Use only Wingsuit patterns'
+    auto_fill_link_url:
+      type: boolean
+      label: 'Auto fill url setting with link url.'

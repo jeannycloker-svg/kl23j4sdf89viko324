@@ -1,0 +1,5 @@
+ckeditor_tooltips.settings:
+  title: CKEditor Tooltips
+  description: Manage CKEditor Tooltips
+  parent: system.admin_config_content
+  route_name: ckeditor_tooltips.settings

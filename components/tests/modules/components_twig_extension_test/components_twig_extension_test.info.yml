@@ -1,0 +1,7 @@
+name: 'Components twig extension test'
+type: module
+description: 'Support module for Components twig extension testing.'
+package: Testing
+components:
+  namespaces:
+    components_twig_extension_test_ns: components

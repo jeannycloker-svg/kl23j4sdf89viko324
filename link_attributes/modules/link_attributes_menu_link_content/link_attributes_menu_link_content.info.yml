@@ -1,0 +1,7 @@
+name: 'Link attributes: Menu Link Content integration'
+type: module
+description: Allows setting link attributes on menu links contents.
+core_version_requirement: ^9 || ^10 || ^11 || ^12
+dependencies:
+  - drupal:link
+  - drupal:link_attributes

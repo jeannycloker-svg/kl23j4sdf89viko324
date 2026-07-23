@@ -1,0 +1,5 @@
+name: Acquia Connector test
+type: module
+package: Testing
+description: Support module for the Acquia Connector module tests.
+hidden: true

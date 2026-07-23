@@ -1,0 +1,7 @@
+gin_moderation_sidebar.settings_form:
+  path: '/admin/config/user-interface/gin-moderation-sidebar'
+  defaults:
+    _form: '\Drupal\gin_moderation_sidebar\Form\ModuleConfigForm'
+    _title: 'Gin Moderation Sidebar'
+  requirements:
+    _permission: 'administer site configuration'

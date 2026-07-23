@@ -1,0 +1,5 @@
+name: media_library_form_element_test
+type: module
+description: 'Test media library form element integration'
+core_version_requirement: ^10.3 || ^11
+package: Testing

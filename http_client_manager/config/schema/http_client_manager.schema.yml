@@ -1,0 +1,14 @@
+action.configuration.http_client_manager_preconfigured_request:*:
+  type: mapping
+  label: 'Pre-configured request action'
+  mapping:
+    received_result_storage:
+      type: string
+      label: 'Result storage'
+    received_result_key:
+      type: string
+      label: 'Result key'
+
+action.configuration.http_client_manager_command:*:*:
+  type: ignore
+  label: 'Action to execute a http_client_manager command'

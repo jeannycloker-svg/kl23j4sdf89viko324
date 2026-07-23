@@ -1,0 +1,5 @@
+type: module
+name: 'UI Patterns Settings Data Provider'
+package: 'Testing'
+dependencies:
+  - ui_patterns_settings:ui_patterns_settings

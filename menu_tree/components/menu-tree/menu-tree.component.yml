@@ -1,0 +1,43 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Menu tree
+status: stable
+group: Navigation
+props:
+  type: object
+  required:
+    - menus
+    - exclude
+  properties:
+    attributes:
+      type: Drupal\Core\Template\Attribute
+      title: Attributes
+      description: Wrapper attributes.
+    menus:
+      type: array
+      title: Menus
+      description: The menus and their children.
+      items:
+        type: object
+      example:
+        - main
+    exclude:
+      type: string
+      title: Exclude
+      description: ID of a menu item to not make selectable.
+      example: e58e373c-b93c-4312-9e41-f18c0954d946
+    expand_collapse_state:
+      type: string
+      title: Expand/collapse button state
+      description: The initial CSS class of the collapse/expand button.
+      enum:
+        - expand
+        - collapse
+      meta:enum:
+        expand: 'Expand all'
+        collapse: 'Collapse all'
+      default: 'expand'
+libraryOverrides:
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once

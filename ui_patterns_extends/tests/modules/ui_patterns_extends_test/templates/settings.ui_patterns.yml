@@ -1,0 +1,57 @@
+foo_base:
+  label: Foo Base
+  fields:
+    dummy:
+      type: text
+      label: Dummy
+    dummy2:
+      type: text
+      label: Dummy2
+
+  allow_variant_token: true
+  variants:
+    default:
+      label: Default
+    blue:
+      label: Blue
+      settings:
+        textfield: blue
+  settings:
+    textfield:
+      type: textfield
+      label: Textfield
+      allow_token: true
+      preview: text preview
+      required: true
+    number:
+      type: number
+      label: Number
+      preview: 10
+      required: true
+  configuration:
+    config: config_value
+
+foo_complete:
+  label: Foo settings
+  extends:
+    - foo_base
+
+foo_settings:
+  label: Foo extend settings
+  extends:
+    - foo_base.settings
+
+foo_fields:
+  label: Foo extend fields
+  extends:
+    - foo_base.fields
+
+foo_settings_setting:
+  label: Foo settings
+  extends:
+    - foo_base.settings.textfield
+
+foo_hierachy:
+  label: Foo Hierachy
+  extends:
+    - foo_complete

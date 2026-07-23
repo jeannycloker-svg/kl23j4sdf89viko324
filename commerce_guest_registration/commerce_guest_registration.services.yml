@@ -1,0 +1,6 @@
+services:
+  commerce_guest_registration.guest_account_creation:
+    class: Drupal\commerce_guest_registration\EventSubscriber\GuestAccountCreation
+    arguments: ['@language_manager', '@entity_type.manager', '@database', '@config.factory']
+    tags:
+      - { name: event_subscriber }

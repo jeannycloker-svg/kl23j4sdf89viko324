@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * @file
+ * Implements hook for altering currently active filter profiles.
+ */
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_config_filter_info_alter().
+ */
+function profile_split_enable_config_filter_info_alter(&$definitions) {
+  $container = \Drupal::getContainer();
+
+  // Find the installed Profile.
+  $active_profile = $container->getParameter('install_profile');
+
+  // If a corresponding split exists, enable it.
+  if (isset($definitions['config_split:' . $active_profile])) {
+    $definitions['config_split:' . $active_profile]['status'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_help().
+ */
+function profile_split_enable_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.profile_split_enable':
+      $text = file_get_contents(__DIR__ . '/README.md');
+      if (!\Drupal::moduleHandler()->moduleExists('markdown')) {
+        return '<pre>' . Html::escape($text) . '</pre>';
+      }
+      else {
+        // Use the Markdown filter to render the README.
+        $filter_manager = \Drupal::service('plugin.manager.filter');
+        $settings = \Drupal::configFactory()->get('markdown.settings')->getRawData();
+        $config = ['settings' => $settings];
+        $filter = $filter_manager->createInstance('markdown', $config);
+        return $filter->process($text, 'en');
+      }
+  }
+  return NULL;
+}

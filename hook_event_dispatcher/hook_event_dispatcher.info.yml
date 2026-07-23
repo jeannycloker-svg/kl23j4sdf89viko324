@@ -1,0 +1,5 @@
+name: Hook Event Dispatcher
+type: module
+description: Dispatches events for several drupal hooks
+core_version_requirement: ^9.3
+package: Hook events

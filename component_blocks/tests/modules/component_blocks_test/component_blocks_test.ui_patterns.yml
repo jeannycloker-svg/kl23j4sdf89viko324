@@ -1,0 +1,17 @@
+test_component:
+  label: 'Test component'
+  use: "@component_blocks_test/test_component/test_component.twig"
+  variants:
+    default:
+      label: 'Default'
+      description: 'Description'
+  fields:
+    subtitle:
+      type: text
+      label: Subtitle
+      description: Subtitle
+      preview: 'Some subtitle text'
+  settings:
+    modifier:
+      type: textfield
+      label: Modifier

@@ -1,0 +1,27 @@
+parameters:
+  menu_tree.hooks_converted: true
+
+services:
+  menu_tree.items:
+    class: Drupal\menu_tree\MenuTreeItems
+    arguments:
+      - '@menu.link_tree'
+      - '@entity_type.manager'
+
+  Drupal\menu_tree\MenuTreeItems:
+    alias: menu_tree.items
+
+  menu_tree.menu_tree_manipulators:
+    class: Drupal\menu_tree\Menu\MenuTreeManipulator
+
+  menu_tree.node_form_submit_handler:
+    class: Drupal\menu_tree\NodeFormSubmitHandler
+    arguments:
+      - '@menu.link_tree'
+      - '@plugin.manager.menu.link'
+
+  Drupal\menu_tree\NodeFormSubmitHandler:
+    alias: menu_tree.node_form_submit_handler
+
+  Drupal\menu_tree\Hook\Hooks:
+    autowire: true

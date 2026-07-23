@@ -1,0 +1,5 @@
+element.colorwidget:
+  version: VERSION
+  css:
+    component:
+      css/colorwidget.css: {}

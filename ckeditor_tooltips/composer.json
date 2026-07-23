@@ -1,0 +1,19 @@
+{
+    "name": "ckeditor_tooltips",
+    "description": "This module adds an option to add tooltips inside the CKEditor.",
+    "type": "drupal-module",
+    "license": "GPL-2.0+",
+    "keywords": ["Drupal", "Ckeditor"],
+    "authors": [
+        {
+            "name": "Aljoša Furlanič (joco_sp)",
+            "homepage": "https://www.drupal.org/u/joco_sp",
+            "role": "Maintainer"
+        }
+    ],
+    "homepage": "https://www.drupal.org/project/ckeditor_tooltips",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/ckeditor_tooltips",
+        "source": "https://cgit.drupalcode.org/ckeditor_tooltips"
+    }
+}

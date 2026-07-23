@@ -1,0 +1,14 @@
+node.type.*.third_party.menu_tree:
+  type: mapping
+  label: 'Menu tree settings'
+  mapping:
+    use_tree_widget:
+      type: boolean
+      label: 'Use menu tree widget'
+system.menu.*.third_party.menu_tree:
+  type: mapping
+  label: 'Menu tree menu weight'
+  mapping:
+    weight:
+      type: integer
+      label: 'Weight'

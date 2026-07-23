@@ -1,0 +1,6 @@
+name: '2. Banana'
+type: module
+description: 'Its a fruity one.'
+package: Testing
+dependencies:
+  - module_filter:module_filter

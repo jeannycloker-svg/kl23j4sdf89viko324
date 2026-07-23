@@ -1,0 +1,39 @@
+{
+  "name": "ckeditor5_paste_filter",
+  "version": "1.1.1",
+  "description": "Filter content pasted into CKEditor 5",
+  "author": "",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "watch": "webpack --mode development --watch",
+    "build": "webpack",
+    "lint": "eslint .",
+    "fix": "eslint . --fix",
+    "changelog": "yarn conventional-changelog --preset conventionalcommits --release-count 2 | tail -n +2 | sed 's#https://git.drupal.org/project/ckeditor5_paste_filter/issues/#https://www.drupal.org/project/ckeditor5_paste_filter/issues/#g' | markdown-it",
+    "bump": "yarn version --new-version $(conventional-recommended-bump --preset conventionalcommits)",
+    "bump-check": "conventional-recommended-bump --preset conventionalcommits --verbose",
+    "bump-unstable": "yarn version --new-version",
+    "test": "playwright install && playwright test"
+  },
+  "devDependencies": {
+    "@ckeditor/ckeditor5-dev-utils": "^30.0.0",
+    "@playwright/test": "^1.54.1",
+    "@types/node": "^24.1.0",
+    "conventional-changelog-cli": "^4.1.0",
+    "conventional-recommended-bump": "^9.0.0",
+    "dotenv": "^17.2.1",
+    "dotenv-defaults": "^5.0.2",
+    "eslint": "8",
+    "eslint-plugin-drupal-contrib": "^2.0.3",
+    "markdown-it": "^14.1.0",
+    "prettier": "3",
+    "raw-loader": "^4.0.2",
+    "terser-webpack-plugin": "^5.2.0",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.4.0"
+  },
+  "dependencies": {
+    "ckeditor5": "~34.1.0"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

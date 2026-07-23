@@ -1,0 +1,7 @@
+ckeditor_tooltips.settings:
+  path: /admin/config/content/ckeditor-tooltips
+  defaults:
+    _form: Drupal\ckeditor_tooltips\Form\CkeditorTooltipsSettingsForm
+    _title: CKEditor Tooltips Configuration
+  requirements:
+    _permission: 'administer ckeditor tooltips'

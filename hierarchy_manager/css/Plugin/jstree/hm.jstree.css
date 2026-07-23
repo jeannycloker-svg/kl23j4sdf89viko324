@@ -1,0 +1,10 @@
+/* HM Tree item status (unpublished/disabled) */
+.jstree-default .jstree-node.hm-tree-node-disabled > a {
+  color: gray;
+  background-color: #fff4f4;
+}
+
+/* HM menu labeling */
+.hm-tree-label {
+  font-style: italic;
+}

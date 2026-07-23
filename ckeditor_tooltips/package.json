@@ -1,0 +1,20 @@
+{
+  "name": "drupal-ckeditor5",
+  "version": "1.0.2",
+  "description": "Drupal CKEditor 5 integration",
+  "author": "",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "watch": "webpack --watch",
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "@ckeditor/ckeditor5-dev-utils": "^39.6.3",
+    "@ckeditor/ckeditor5-icons": "~45.2.0",
+    "ckeditor5": "^45.2.2",
+    "raw-loader": "^4.0.2",
+    "terser-webpack-plugin": "^5.2.0",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^4.4.0"
+  }
+}

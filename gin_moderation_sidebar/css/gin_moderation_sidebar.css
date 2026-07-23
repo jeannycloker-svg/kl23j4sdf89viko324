@@ -1,0 +1,147 @@
+/* Gin Moderation Sidebar colors based on Gin's colors. */
+/* phpcs:ignoreFile */
+:root {
+  /* Lighter colors for small screen toolbar and dark-mode. */
+  --gms-pub-rgb: 129, 218, 175;
+  --gms-draft-rgb: 239, 155, 155;
+  --gms-draft-avail-rgb: 243, 239, 231;
+}
+
+/* Default tab style. */
+body {
+  /* Foreground colors. */
+  --gms-color-pub: rgb(var(--gms-pub-rgb));
+  --gms-color-draft: rgb(var(--gms-draft-rgb));
+  --gms-color-draft-avail: rgb(var(--gms-draft-avail-rgb));
+  /* Background colors. */
+  --gms-bg-alpha: .15;
+  --gms-color-pub-bg: rgba(var(--gms-pub-rgb), var(--gms-bg-alpha));
+  --gms-color-draft-bg: rgba(var(--gms-draft-rgb), var(--gms-bg-alpha));
+  /* Use a differnt alpha to ensure at least AA level contrast. */
+  --gms-color-draft-avail-bg: rgba(var(--gms-draft-avail-rgb), .08);
+}
+
+/* High contrast tab style. */
+body:is(.gms--tab-style-contrast, .gin--high-contrast-mode, .gin--classic-toolbar) {
+  /* Foreground colors. */
+  --gms-color-pub: var(--gin-color-green-light);
+  --gms-color-draft: var(--gin-color-danger-light);
+  --gms-color-draft-avail: var(--gin-color-warning-light);
+  /* Background colors. */
+  --gms-color-pub-bg: var(--gin-bg-green);
+  --gms-color-draft-bg: var(--gin-bg-danger);
+  --gms-color-draft-avail-bg: var(--gin-bg-warning);
+}
+
+@media (min-width: 61em) {
+  /* Darker colors for large screens NOT dark mode AND NOT classic toolbar. */
+  html:not(.gin--dark-mode) body:not(.gin--classic-toolbar) {
+    --gms-pub-rgb: 1, 101, 71;
+    --gms-draft-rgb: 161, 1, 35;
+    --gms-draft-avail-rgb: 147, 103, 1;
+  }
+}
+
+/* Move Moderation Sidebar tab to the far right. */
+.moderation-sidebar-toolbar-tab {
+  order: 1;
+}
+
+@media (min-width: 61em) {
+  /* Adjust for the fact that we've moved the tab to the far right. */
+  .gin-secondary-toolbar .moderation-sidebar-toolbar-tab {
+    margin-left: 1em !important;
+    margin-right: -1em;
+  }
+}
+
+/* Use the gin-style 'mask' icon instead of the standard bg image icon. */
+.toolbar-icon-moderation-sidebar:before {
+  background-image: none !important;
+  -webkit-mask-image: url(../images/gin-tasks-icon.svg) !important;
+  mask-image: url(../images/gin-tasks-icon.svg) !important;
+}
+
+.toolbar-icon-moderation-sidebar:hover,
+.toolbar-icon-moderation-sidebar:focus {
+  filter: brightness(135%);
+}
+
+.toolbar-icon-moderation-sidebar:after {
+  margin-left: 0.25em !important;
+  padding-left: 0.25em !important;
+}
+
+/* Published. */
+:is(.toolbar-bar, .gin-secondary-toolbar) .moderation-label-published,
+:is(.toolbar-bar, .gin-secondary-toolbar) .moderation-label-published:after,
+:is(.toolbar-bar, .gin-secondary-toolbar) .moderation-label-published:hover,
+:is(.toolbar-bar, .gin-secondary-toolbar) .moderation-label-published:focus {
+  color: var(--gms-color-pub) !important;
+  background-color: var(--gms-color-pub-bg) !important;
+}
+
+:is(.toolbar-bar, .gin-secondary-toolbar) .toolbar-icon-moderation-sidebar.moderation-label-published:before {
+  background-color: var(--gms-color-pub) !important;
+}
+
+/* Draft. */
+:is(.toolbar-bar, .gin-secondary-toolbar) .moderation-label-draft,
+:is(.toolbar-bar, .gin-secondary-toolbar) .moderation-label-draft:after,
+:is(.toolbar-bar, .gin-secondary-toolbar) .moderation-label-draft:hover,
+:is(.toolbar-bar, .gin-secondary-toolbar) .moderation-label-draft:focus {
+  color: var(--gms-color-draft) !important;
+  background-color: var(--gms-color-draft-bg) !important;
+}
+
+:is(.toolbar-bar, .gin-secondary-toolbar)  .toolbar-icon-moderation-sidebar.moderation-label-draft:before {
+  background-color: var(--gms-color-draft) !important;
+}
+
+/* Draft Available. */
+:is(.toolbar-bar, .gin-secondary-toolbar) .moderation-label-draft-available,
+:is(.toolbar-bar, .gin-secondary-toolbar) .moderation-label-draft-available:after,
+:is(.toolbar-bar, .gin-secondary-toolbar) .moderation-label-draft-available:hover,
+:is(.toolbar-bar, .gin-secondary-toolbar) .moderation-label-draft-available:focus {
+  color: var(--gms-color-draft-avail) !important;
+  background-color: var(--gms-color-draft-avail-bg)!important;
+}
+
+:is(.toolbar-bar, .gin-secondary-toolbar)  .toolbar-icon-moderation-sidebar.moderation-label-draft-available:before {
+  background-color: var(--gms-color-draft-avail) !important;
+}
+
+/* Unset the label background color to avoid doubling up on alpha. */
+:is(.toolbar-bar, .gin-secondary-toolbar) .moderation-label-published:after,
+:is(.toolbar-bar, .gin-secondary-toolbar) .moderation-label-draft:after,
+:is(.toolbar-bar, .gin-secondary-toolbar) .moderation-label-draft-available:after {
+  background-color: transparent !important;
+}
+
+@media (min-width: 32em) {
+  .gin-secondary-toolbar .toolbar-secondary .toolbar-bar .toolbar-tab .toolbar-item.toolbar-icon-moderation-sidebar {
+    border-radius: var(--gin-border-s) !important;
+  }
+}
+
+@media (max-width: 80em) {
+  .gin-secondary-toolbar .toolbar-icon-moderation-sidebar:before {
+    left: 7px !important;
+  }
+
+  .gin-secondary-toolbar .toolbar-icon-moderation-sidebar:after {
+    display: none;
+  }
+}
+
+@media (min-width: 80em) {
+  .gin-secondary-toolbar .toolbar-icon-moderation-sidebar {
+    margin-left: 4px !important;
+    margin-right: 4px !important;
+  }
+}
+
+/* Temp fix for Gin issue https://www.drupal.org/project/gin/issues/3339063. */
+.gin-secondary-toolbar__layout-container {
+  min-width: 0;
+}

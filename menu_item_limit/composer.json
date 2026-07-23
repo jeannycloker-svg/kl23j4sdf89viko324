@@ -1,0 +1,21 @@
+{
+    "name": "drupal/menu_item_limit",
+    "description": "Limit the amount of items a menu can have.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.drupal.org/project/menu_item_limit",
+    "authors": [
+      {
+        "name": "Lucio Waßill",
+        "homepage": "https://www.drupal.org/u/cyberschorsch",
+        "role": "Maintainer"
+      }
+    ],
+    "require": {
+        "drupal/core": "^9.4 || ^10 || ^11"
+    },
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/menu_item_limit",
+        "source": "https://git.drupalcode.org/project/menu_item_limit"
+    }
+}

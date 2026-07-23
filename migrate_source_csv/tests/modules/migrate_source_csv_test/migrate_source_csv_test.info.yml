@@ -1,0 +1,8 @@
+name: Migrate Source CSV Test
+type: module
+package: Testing
+dependencies:
+  - drupal:migrate
+  - migrate_source_csv:migrate_source_csv
+  - drupal:node
+  - drupal:datetime

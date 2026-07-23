@@ -1,0 +1,146 @@
+################
+# GitLabCI template for Drupal projects.
+#
+# This template is designed to give any Contrib maintainer everything they need to test, without requiring modification.
+# It is also designed to keep up to date with Core Development automatically through the use of include files that can be centrally maintained.
+# As long as you include the project, ref and three files below, any future updates added by the Drupal Association will be used in your
+# pipelines automatically. However, you can modify this template if you have additional needs for your project.
+# The full documentation is on https://project.pages.drupalcode.org/gitlab_templates/
+################
+
+# For information on alternative values for 'ref' see https://project.pages.drupalcode.org/gitlab_templates/info/templates-version/
+# To test a Drupal 7 project, change the first include filename from .main.yml to .main-d7.yml
+include:
+  - project: $_GITLAB_TEMPLATES_REPO
+    ref: $_GITLAB_TEMPLATES_REF
+    file:
+      - "/includes/include.drupalci.main.yml"
+      - "/includes/include.drupalci.variables.yml"
+      - "/includes/include.drupalci.workflows.yml"
+  - local: .gitlab/ci/drupal.yml
+
+eslint-contrib:
+  stage: validate
+  rules:
+    - exists:
+        - "**/*.js"
+        - "**/*.yml"
+      when: on_success
+  needs:
+    - composer
+  script:
+    # Change directory to the project root folder
+    - cd $CI_PROJECT_DIR/$_WEB_ROOT/modules/custom/$CI_PROJECT_NAME
+    # Install node dependencies with yarn. Should still pass even if project
+    # has no node dependencies.
+    - corepack enable && yarn install
+    # Configure eslint with core defaults. We use core/.eslintrc.passing.json which includes core/.eslintrc.json and .eslintrc.jquery.json.
+    # These links are created in the folder above modules/custom/$CI_PROJECT_NAME and will be used in addition to the project's own .eslintrc.json.
+    - ln -s $CI_PROJECT_DIR/$_WEB_ROOT/core/.eslintrc.passing.json $CI_PROJECT_DIR/$_WEB_ROOT/modules/custom/.eslintrc.json
+    - ln -s $CI_PROJECT_DIR/$_WEB_ROOT/core/.eslintrc.jquery.json $CI_PROJECT_DIR/$_WEB_ROOT/modules/custom/.eslintrc.jquery.json
+    # Configure prettier with core defaults.
+    - test -e .prettierrc.json || ln -s $CI_PROJECT_DIR/$_WEB_ROOT/core/.prettierrc.json .
+    - test -e .prettierignore || echo '*.yml' > .prettierignore
+    - echo "ESLINT version $(${CI_PROJECT_DIR}/${_WEB_ROOT}/modules/custom/${CI_PROJECT_NAME}/node_modules/.bin/eslint --version)"
+    # The first run of eslint generates a junit output file.
+    # The `|| EXIT_CODE_FILE=$?` stores an exit code if the job fails, and makes sure the script continues.
+    # https://stackoverflow.com/questions/59180675/how-to-continue-job-even-when-script-fails
+    - $CI_PROJECT_DIR/$_WEB_ROOT/modules/custom/$CI_PROJECT_NAME/node_modules/.bin/eslint --no-error-on-unmatched-pattern --ignore-pattern="*.es6.js" --resolve-plugins-relative-to=$CI_PROJECT_DIR/$_WEB_ROOT/modules/custom/$CI_PROJECT_NAME --ext=.js,.yml --format=junit --output-file=$CI_PROJECT_DIR/junit.xml $_ESLINT_EXTRA . || EXIT_CODE_FILE=$?
+    # The artifact file cannot be optional, it must exist or the job gives a failure exit code. Therefore create empty patch file in case there are no fixes.
+    - touch $CI_PROJECT_DIR/_eslint.patch
+    # Exit early if we cannot --fix anything. This also caters for config failures.
+    - |
+      if [ "$EXIT_CODE_FILE" != "1" ]; then
+        [[ "$EXIT_CODE_FILE" == "" ]] && printf "$DIVIDER\nThere are no ESLINT errors or warnings$DIVIDER\n"
+        echo "Exiting with EXIT_CODE=$EXIT_CODE_FILE"
+        exit $EXIT_CODE_FILE
+      fi
+    # There are eslint warnings so run it a second time to write the messages to the log.
+    - printf "$DIVIDER\nThese are the current ESLINT errors and warnings$DIVIDER\n"
+    - $CI_PROJECT_DIR/$_WEB_ROOT/modules/custom/$CI_PROJECT_NAME/node_modules/.bin/eslint --no-error-on-unmatched-pattern --ignore-pattern="*.es6.js" --resolve-plugins-relative-to=$CI_PROJECT_DIR/$_WEB_ROOT/modules/custom/$CI_PROJECT_NAME --ext=.js,.yml $_ESLINT_EXTRA . || true
+    # Run a third time with the --fix option to enable a patch to be created.
+    - printf "$DIVIDER\nNow running ESLINT using the --fix option. Any errors shown below are not fixable automatically.$DIVIDER\n"
+    - $CI_PROJECT_DIR/$_WEB_ROOT/modules/custom/$CI_PROJECT_NAME/node_modules/.bin/eslint --no-error-on-unmatched-pattern --ignore-pattern="*.es6.js" --resolve-plugins-relative-to=$CI_PROJECT_DIR/$_WEB_ROOT/modules/custom/$CI_PROJECT_NAME --ext=.js,.yml $_ESLINT_EXTRA --fix . || EXIT_CODE_FIX=$?
+    # Get the names of the files that have been changed by using the --fix option.
+    # Use -G"." to ignore files with no actual content changes, as there may be files where the only change is the mode and we do not want these.
+    # Also limit to just changes in .js and .yml files, as other files such as composer.json may have been changed earlier, not by eslint --fix.
+    - CHANGED=$(git diff -G"." --name-only . $CI_PROJECT_DIR | grep -E '\.(yml|js)$') || true
+    - |
+      if [ "$CHANGED" != "" ]; then
+        printf "$CHANGED" | xargs -I % git diff % $CI_PROJECT_DIR/% >> $CI_PROJECT_DIR/_eslint.patch
+        [[ $EXIT_CODE_FIX == "1" ]] && HOW_MANY="some" || HOW_MANY="ALL"
+        printf "$DIVIDER\nThe following files have ESLINT errors and warnings, and $HOW_MANY of them can be resolved using the --fix argument.\n \n$CHANGED\n \nA patch file _eslint.patch containing the changes has been created as an artifact for download.$DIVIDER\n"
+      else
+        printf "$DIVIDER\nNothing could be fixed with the --fix option$DIVIDER\n"
+      fi
+    - test -f .eslintignore && echo "===  This is .eslintignore  ===" && cat .eslintignore || true
+    - test -f .prettierignore && echo "=== This is .prettierignore ===" && cat .prettierignore || true
+    - printf "Exiting with EXIT_CODE=$EXIT_CODE_FILE\n"
+    - exit $EXIT_CODE_FILE
+  allow_failure: true
+  artifacts:
+    expose_as: junit
+    expire_in: 6 mos
+    when: always
+    name: artifacts-$CI_PIPELINE_ID-$CI_JOB_NAME_SLUG
+    paths:
+      - junit.xml
+      - _eslint.patch
+    reports:
+      junit: junit.xml
+
+playwright:
+  stage: test
+  needs: []
+  interruptible: true
+  image: ghcr.io/drupal-canvas/drupal-testing:1.0.0
+  extends:
+    - .test-variables
+  variables:
+    GIT_DEPTH: 1
+    _TARGET_DB_TYPE: sqlite
+    DRUPAL_TEST_BASE_URL: http://localhost
+    DRUPAL_TEST_WEBSERVER_USER: www-data
+    DRUPAL_TEST_PLAYWRIGHT_SKIP_TEARDOWN: true
+  before_script:
+    - !reference [ .drupal ]
+    - npm install --global yarn
+  script:
+    - yarn install
+    - yarn test
+  after_script:
+    - cp -R _drupal/web/modules/contrib/$CI_PARENT_PROJECT_NAME/test-results $CI_PROJECT_DIR/test-results
+    - cp -R _drupal/web/modules/contrib/$CI_PARENT_PROJECT_NAME/playwright-report $CI_PROJECT_DIR/playwright-report
+  artifacts:
+    expose_as: 'Playwright Test Reports'
+    when: always
+    expire_in: 6 mos
+    paths:
+      - playwright-report/
+      - test-results/
+    reports:
+      junit:
+        - test-results/playwright.xml
+
+playwright (previous major):
+  extends:
+    - playwright
+  variables:
+    DRUPAL_CORE: $CORE_PREVIOUS_STABLE
+
+################
+# Pipeline configuration variables are defined with default values and descriptions in the file
+# https://git.drupalcode.org/project/gitlab_templates/-/blob/main/includes/include.drupalci.variables.yml
+# Uncomment the lines below if you want to override any of the variables. The following is just an example.
+################
+variables:
+  SKIP_ESLINT: '1'
+  SKIP_PHPUNIT: '1'
+  # Set this as CI_PROJECT_NAME changes on forks.
+  CI_PARENT_PROJECT_NAME: ckeditor5_paste_filter
+  DRUPALORG_CI_SERVER_URL: https://git.drupalcode.org
+  # Show env variables always to help with debugging.
+  _SHOW_ENVIRONMENT_VARIABLES: 1
+
+#   OPT_IN_TEST_NEXT_MAJOR: '1'
+#   _CURL_TEMPLATES_REF: 'main'

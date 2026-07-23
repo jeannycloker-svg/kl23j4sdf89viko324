@@ -1,0 +1,63 @@
+{#
+/**
+ * @file
+ * Menu tree component.
+ */
+#}
+
+{% macro menuTree(items, root, menu_id, exclude) -%}
+  {% if items is not empty %}
+    <ul class="{{ root ? 'root' : 'branch' }}">
+      {% for menu_item in items %}
+        {% if menu_item.id == exclude %}
+          <li role="presentation" draggable="true">
+            <button disabled class="select-item" data-value="{{ menu_item.id }}" data-weight="{{ menu_item.weight }}">
+              <span role="treeitem">{{ menu_item.text }}</span>
+            </button>
+          </li>
+        {% else %}
+          <li role="presentation">
+            {% if menu_item.submenu is not empty %}
+              <details>
+                <summary>
+                  <button class="select-item" data-value="{{ menu_item.id }}" data-weight="{{ menu_item.weight }}">
+                    <span role="treeitem">{{ menu_item.text }}</span>
+                  </button>
+                </summary>
+                {{ _self.menuTree(menu_item.submenu, false, menu_id, exclude) }}
+              </details>
+            {% else %}
+              <button class="select-item" data-value="{{ menu_item.id }}" data-weight="{{ menu_item.weight }}">
+                <span role="treeitem">{{ menu_item.text }}</span>
+              </button>
+            {% endif %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+{%- endmacro %}
+
+{% set state = { class: expand_collapse_state == 'expand' ? 'expand' : 'collapse', text: expand_collapse_state == 'expand' ? 'Expand all'|t : 'Collapse all'|t } %}
+
+<div{{ attributes }}>
+  {% for menu in menus %}
+    <div class="menu-tree__menu" data-menu-id="{{ menu.id }}">
+      <ul class="menu-tree__tree" role="tree">
+        <li role="presentation">
+          <details open>
+            <summary>
+              <button class="select-item" data-value="{{ menu.id }}:">
+                <span role="treeitem">{{ menu.label }}</span>
+              </button>
+              <button class="link toggle-collapse {{ state.class }}" data-menu-id="{{ menu.id }}">
+                <span class="action-link action-link--extrasmall action-link--icon-expand">{{ state.text }}</span>
+              </button>
+            </summary>
+            {{ _self.menuTree(menu.menu_tree, true, menu.id, exclude) }}
+          </details>
+        </li>
+      </ul>
+    </div>
+  {% endfor %}
+</div>

@@ -1,0 +1,8 @@
+name: 'UI Patterns Layout Builder test'
+type: module
+description: 'UI Patterns Layout Builder test.'
+package: Testing
+version: VERSION
+core_version_requirement: ^8 || ^9 || ^10 || ^11
+dependencies:
+  - ui_patterns_layout_builder:ui_patterns_layout_builder

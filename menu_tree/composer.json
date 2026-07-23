@@ -1,0 +1,12 @@
+{
+    "name": "drupal/menu_tree",
+    "description": "Provides a tree view widget for selecting menu parent page.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Peter Törnstrand",
+            "email": "peter.tornstrand@happiness.se"
+        }
+    ]
+}

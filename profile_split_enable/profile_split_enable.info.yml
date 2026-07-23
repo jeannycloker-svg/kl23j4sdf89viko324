@@ -1,0 +1,5 @@
+name: Profile Split Enable
+type: module
+description: Allows Drupal sites using multiple profiles, CMI and config split to have a config split defined for each profile
+core_version_requirement: ^8.8 || ^9 || ^10
+package: Config

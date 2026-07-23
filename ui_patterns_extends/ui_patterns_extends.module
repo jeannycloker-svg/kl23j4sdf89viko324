@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Contains ui_patterns_extends.module.
+ */
+
+use Drupal\ui_patterns_extends\UIPatternsExtends;
+
+/**
+ * Implements hook_ui_patterns_info_alter().
+ */
+function ui_patterns_extends_ui_patterns_info_alter(array &$definitions) {
+  /** @var \Drupal\ui_patterns\Definition\PatternDefinition $definition */
+  foreach ($definitions as $definition) {
+    $additional = $definition->getAdditional();
+    if (isset($additional['extends'])) {
+      $extender = new UIPatternsExtends($definition, $definitions);
+      $extender->extends();
+    }
+  }
+}

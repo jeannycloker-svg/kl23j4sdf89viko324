@@ -1,0 +1,10 @@
+name: Section library reusable
+type: module
+description: Creates an aspect ratio CSS container for image and picture elements.
+core_version_requirement: ^9 || ^10 || ^11
+package: User interface
+dependencies:
+  - drupal:section_library
+  - drupal:layout_builder
+  - drupal:block_content
+

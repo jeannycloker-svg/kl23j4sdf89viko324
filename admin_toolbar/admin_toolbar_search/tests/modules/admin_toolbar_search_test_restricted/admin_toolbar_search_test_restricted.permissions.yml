@@ -1,0 +1,4 @@
+# Permissions for the Admin Toolbar Search Test Restricted module.
+
+access admin toolbar search test restricted:
+  title: 'Access the Admin Toolbar Search Test Restricted configuration page'

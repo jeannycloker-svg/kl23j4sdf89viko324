@@ -1,0 +1,26 @@
+# Schema for the views_dependent_filters filter plugin.
+views.filter.views_dependent_filter:
+  type: views_filter
+  label: 'Dependent filter'
+  mapping:
+    condition:
+      type: string
+      label: 'Condition mode'
+    controller_filter:
+      type: string
+      label: 'Controller filter'
+    controller_values:
+      type: sequence
+      label: 'Controller values'
+      sequence:
+        type: string
+        label: 'Value'
+    dependent_filters:
+      type: sequence
+      label: 'Dependent filters'
+      sequence:
+        type: string
+        label: 'Dependent filter'
+    negate:
+      type: boolean
+      label: 'Negate condition'

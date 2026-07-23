@@ -1,0 +1,4 @@
+# Permissions for the Admin Toolbar Search Test module.
+
+access admin toolbar search test:
+  title: 'Access the Admin Toolbar Search Test configuration page'

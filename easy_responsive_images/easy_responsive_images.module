@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * Easy Responsive Images core functions.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function easy_responsive_images_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'easy_responsive_images.image':
+      return '<p>' . t('For a full description of the module, visit the project page: https://drupal.org/project/easy_responsive_images') . '</p>';
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function easy_responsive_images_theme() {
+  return [
+    'easy_responsive_images_formatter' => [
+      'variables' => [
+        'url' => NULL,
+        'src' => NULL,
+        'srcset' => NULL,
+        'item' => NULL,
+        'item_attributes' => NULL,
+        'view_mode' => NULL,
+      ],
+    ],
+  ];
+}

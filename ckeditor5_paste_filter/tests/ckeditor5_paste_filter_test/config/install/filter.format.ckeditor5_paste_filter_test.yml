@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+name: ckeditor5_paste_filter_test
+format: ckeditor5_paste_filter_test
+weight: 0
+filters: {  }

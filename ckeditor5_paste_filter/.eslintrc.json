@@ -1,0 +1,4 @@
+{
+  "extends": ["plugin:drupal-contrib/passing"],
+  "root": true
+}

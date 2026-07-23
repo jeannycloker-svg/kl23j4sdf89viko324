@@ -1,0 +1,6 @@
+name: 'Entity usage url updater test'
+type: module
+description: 'Support module for the Entity Usage module tests.'
+package: Testing
+dependencies:
+  - entity_usage:entity_usage

@@ -1,0 +1,9 @@
+ckeditor5_paste_filter_pasteFilter:
+  ckeditor5:
+    plugins:
+      - pasteFilter.PasteFilter
+  drupal:
+    label: Paste filter
+    class: \Drupal\ckeditor5_paste_filter\Plugin\CKEditor5Plugin\PasteFilter
+    library: ckeditor5_paste_filter/paste_filter
+    elements: false

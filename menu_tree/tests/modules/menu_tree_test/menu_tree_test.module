@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Contains hooks for the 'menu_tree_test' module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+#[LegacyHookModuleImplementsAlter]
+function menu_tree_test_module_implements_alter(&$implementations, $hook) : void {
+  if ($hook === 'form_node_form_alter') {
+    $implementation = $implementations['menu_tree_test'];
+    unset($implementations['menu_tree_test']);
+    $implementations['menu_tree_test'] = $implementation;
+  }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ */
+function menu_tree_test_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) : void {
+  $form['menu']['link']['prev_sibling']['#type'] = 'textfield';
+  $form['menu']['link']['next_sibling']['#type'] = 'textfield';
+}

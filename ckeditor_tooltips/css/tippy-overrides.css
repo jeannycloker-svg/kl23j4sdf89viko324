@@ -1,0 +1,126 @@
+/*
+ * Overrides to the tippy used by this module.
+ * This is also used on the Configuration form.
+ */
+
+/* Bubble */
+.tippy-box {
+  background: #ffffff;
+  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 0;
+  color: #000000;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+.tippy-box p {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  margin-bottom: 20px !important;
+}
+
+.tippy-box p:last-child {
+  margin-bottom: 0 !important;
+}
+
+.tippy-box .tooltip-title {
+  display: block;
+  font-size: 20px;
+  letter-spacing: 0.2px;
+  line-height: 1.5;
+  margin-bottom: 19px;
+}
+
+.tippy-box .tippy-content {
+  padding: 40px 42px 50px 42px;
+}
+
+.tippy-box .tippy-arrow {
+  color: #ffffff;
+}
+
+.tippy-box[data-placement^=top]>.tippy-arrow:before {
+  bottom: -12px;
+  border-width: 15px 30px 0;
+  left: -24px;
+}
+
+/*
+ * Added from before
+ */
+.tippy-tooltip[data-animation=fade][data-state=hidden] {
+  opacity: 0;
+}
+
+.tippy-iOS {
+  cursor: pointer !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tippy-popper {
+  pointer-events: none;
+  max-width: calc(100vw - 10px);
+  transition-timing-function: cubic-bezier(.165, .84, .44, 1);
+  transition-property: transform;
+}
+
+.tippy-tooltip {
+  position: relative;
+  border-radius: 4px;
+  line-height: 1.4;
+  transition-property: visibility, opacity, transform;
+  outline: 0;
+  background-color: #333;
+  color: #fff;
+}
+
+.tippy-tooltip[data-placement^=top] > .tippy-arrow {
+  border-width: 8px 8px 0;
+  border-top-color: #333;
+  margin: 0 3px;
+  transform-origin: 50% 0;
+  bottom: -7px;
+}
+
+.tippy-tooltip[data-placement^=bottom] > .tippy-arrow {
+  border-width: 0 8px 8px;
+  border-bottom-color: #333;
+  margin: 0 3px;
+  transform-origin: 50% 7px;
+  top: -7px;
+}
+
+.tippy-tooltip[data-placement^=left] > .tippy-arrow {
+  border-width: 8px 0 8px 8px;
+  border-left-color: #333;
+  margin: 3px 0;
+  transform-origin: 0 50%;
+  right: -7px;
+}
+
+.tippy-tooltip[data-placement^=right] > .tippy-arrow {
+  border-width: 8px 8px 8px 0;
+  border-right-color: #333;
+  margin: 3px 0;
+  transform-origin: 7px 50%;
+  left: -7px;
+}
+
+.tippy-tooltip[data-interactive][data-state=visible] {
+  pointer-events: auto;
+}
+
+.tippy-tooltip[data-inertia][data-state=visible] {
+  transition-timing-function: cubic-bezier(.54, 1.5, .38, 1.11);
+}
+
+.tippy-arrow {
+  position: absolute;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.tippy-tooltip-text {
+  text-decoration: underline;
+  cursor: default;
+}

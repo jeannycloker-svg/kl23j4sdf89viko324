@@ -1,0 +1,6 @@
+name: 'Scheduler Entity Access Test'
+type: module
+description: 'Support module for Scheduler testing with restricted entity access.'
+package: Testing
+dependencies:
+  - scheduler:scheduler

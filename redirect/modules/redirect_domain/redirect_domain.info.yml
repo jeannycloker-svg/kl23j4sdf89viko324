@@ -1,0 +1,8 @@
+name: 'Redirect Domain'
+type: module
+description: 'Allows users to redirect between domains.'
+core_version_requirement: ^10.3 || ^11 || ^12
+configure: redirect_domain.domain_list
+
+dependencies:
+  - redirect:redirect

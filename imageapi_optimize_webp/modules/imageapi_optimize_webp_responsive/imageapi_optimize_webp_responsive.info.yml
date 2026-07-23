@@ -1,0 +1,7 @@
+name: 'ImageAPI Optimize WebP Responsive'
+type: module
+description: 'Implements WebP derivatives in core Responsive Images'
+core_version_requirement: ^10.3 || ^11
+package: 'Image Optimize'
+dependencies:
+  - imageapi_optimize_webp:imageapi_optimize_webp

@@ -1,0 +1,7 @@
+name: Menu tree
+description: Provides a tree view widget for selecting menu parent page.
+type: module
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - drupal:menu_ui
+  - drupal:node

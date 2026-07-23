@@ -1,0 +1,29 @@
+version: "2.1"
+services:
+  # Web
+  web:
+    extends:
+      file: ${HOME}/.docksal/stacks/services.yml
+      service: apache
+    depends_on:
+      - cli
+    environment:
+      - DOCKSAL=1
+  # DB
+  db:
+    extends:
+      file: ${HOME}/.docksal/stacks/services.yml
+      service: mysql
+
+  # CLI
+  cli:
+    extends:
+      file: ${HOME}/.docksal/stacks/services.yml
+      service: cli
+    environment:
+      - PATH=/var/www/vendor/bin:$PATH
+      - PHP_IDE_CONFIG=serverName=${VIRTUAL_HOST}
+      - DOCKSAL=1
+      - COMPOSER_MEMORY_LIMIT=-1
+      - SIMPLETEST_DB=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db/${MYSQL_DATABASE}
+      - SIMPLETEST_BASE_URL=http://${VIRTUAL_HOST}

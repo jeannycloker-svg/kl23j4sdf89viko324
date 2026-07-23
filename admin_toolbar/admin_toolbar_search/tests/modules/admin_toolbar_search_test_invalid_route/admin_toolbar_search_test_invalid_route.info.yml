@@ -1,0 +1,9 @@
+# Info file for a test-only module used to test Admin Toolbar Search.
+name: 'Admin Toolbar Search Test Invalid Route'
+type: module
+description: 'Provides a module whose "configure" key references a route that does not exist, for testing that Admin Toolbar Search skips it gracefully.'
+package: Testing
+core_version_requirement: ^9.5 || ^10 || ^11
+# Intentionally points to a route name that is never defined by this module,
+# to test SearchLinks::routeExists() gracefully skips invalid/missing routes.
+configure: admin_toolbar_search_test_invalid_route.this_route_does_not_exist

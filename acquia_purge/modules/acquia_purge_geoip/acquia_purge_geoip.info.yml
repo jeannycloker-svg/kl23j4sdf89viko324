@@ -1,0 +1,5 @@
+name: Acquia Purge GeoIP
+type: module
+description: "Adds the X-Geo-Country header to Drupal's Vary response header so that your site gets varied by content."
+package: "Purge - reverse proxies & CDNs"
+core_version_requirement: '^9.5 || ^10 || ^11'

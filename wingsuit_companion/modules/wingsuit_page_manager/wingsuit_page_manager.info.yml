@@ -1,0 +1,7 @@
+name: Wingsuit Page Manager module
+type: module
+description: 'Provides theme negitator for page_manager.'
+package: Wingsuit
+core_version_requirement: ^8 || ^9 || ^10 || ^11
+dependencies:
+  - drupal:text

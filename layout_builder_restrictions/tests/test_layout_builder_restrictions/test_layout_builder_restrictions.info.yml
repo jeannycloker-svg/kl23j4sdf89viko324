@@ -1,0 +1,6 @@
+name: 'Test module for Layout Builder Restrictions'
+description: 'Support module for Layout Builder Restrictions testing.'
+package: Testing
+type: module
+dependencies:
+  - layout_builder_restrictions:layout_builder_restrictions

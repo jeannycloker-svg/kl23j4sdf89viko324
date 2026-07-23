@@ -1,0 +1,7 @@
+gin_moderation_sidebar.settings:
+  type: config_object
+  label: 'Gin Moderation Sidebar settings'
+  mapping:
+    tab_style:
+      type: string
+      label: 'Moderation Sidebar tab style'

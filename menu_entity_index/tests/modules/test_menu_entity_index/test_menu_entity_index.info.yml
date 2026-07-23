@@ -1,0 +1,11 @@
+name: "Test Menu Entity Index"
+description: "Supports testing of Menu Entity Index."
+type: module
+package: Testing
+core_version_requirement: ^8.8 || ^9 || ^10 || ^11
+dependencies:
+  - 'menu_entity_index:menu_entity_index'
+  - 'drupal:menu_link_content'
+  - 'drupal:node'
+  - 'drupal:user'
+  - 'drupal:views'

@@ -1,0 +1,8 @@
+name: Field Event Dispatcher
+type: module
+description: Registers event dispatchers for several field hooks
+core_version_requirement: ^9.3
+package: Hook events
+dependencies:
+  - hook_event_dispatcher:hook_event_dispatcher
+  - drupal:field

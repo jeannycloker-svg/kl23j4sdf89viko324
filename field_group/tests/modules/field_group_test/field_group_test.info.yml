@@ -1,0 +1,5 @@
+name: 'Field Group Test'
+description: 'Test module for Field Group'
+package: Testing
+type: module
+hidden: TRUE

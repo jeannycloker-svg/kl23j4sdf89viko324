@@ -1,0 +1,6 @@
+name: 'Scheduler Extras'
+type: module
+description: 'Support module for general Scheduler testing.'
+package: Testing
+dependencies:
+  - scheduler:scheduler

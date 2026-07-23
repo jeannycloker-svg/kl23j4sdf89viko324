@@ -1,0 +1,12 @@
+name: Twig tweak test
+type: module
+description: Support module for Twig tweak testing.
+package: Testing
+core_version_requirement: ^11.2
+dependencies:
+  - drupal:system (>=11.2)
+  - drupal:block
+  - drupal:media
+  - drupal:node
+  - drupal:path
+  - drupal:twig_tweak
